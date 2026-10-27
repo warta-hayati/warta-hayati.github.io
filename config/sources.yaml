@@ -31,7 +31,14 @@ topics:
 sources:
   # Indonesia
   - {id: kementan, name: "Kementerian Pertanian RI", url: "https://www.pertanian.go.id/", tier: pemerintah, lang: id, topics: [pertanian, perkebunan]}
-  - {id: kkp, name: "Kementerian Kelautan dan Perikanan RI", url: "https://kkp.go.id/", tier: pemerintah, lang: id, topics: [perikanan-tawar, perikanan-laut]}
+  - id: kkp
+    name: "Kementerian Kelautan dan Perikanan RI"
+    url: "https://kkp.go.id/"
+    tier: pemerintah
+    lang: id
+    topics: [perikanan-tawar, perikanan-laut]
+    list: {item: "div.main-berita a", title: "div.fw-bolder", date: "div.highlight-news-card-date, div.subhighlight-news-card-date"}
+    note: "Tanpa RSS. Daftar berita dibaca dari blok 'INFORMASI TERKINI' di halaman depan memakai aturan 'list'."
   - id: brin-agro
     name: "BRIN (Pertanian dan Perikanan)"
     url: "https://www.brin.go.id/"
