@@ -135,7 +135,7 @@ Uji lokal setelah penambahan (2026-10-27) mencatat **20 gagal dari 43 sumber akt
 - **Penerbit menghentikan RSS:** Trees, Forests and People dan Aquacultural Engineering (404 dari `rss.sciencedirect.com`), serta Agriculture and Food Security (alamat BMC menyajikan HTML, bukan XML).
 - **Menolak bot dengan 403:** Forests, Plants, Diversity, dan Microorganisms (MDPI). Ini blokir akses, bukan *feed* yang hilang.
 - **Aquaculture Research:** 404 pada kedua ISSN, cetak `1355557x` dan daring `13652109`. Tidak ada alamat pengganti yang ditemukan.
-- **Domain berpindah:** JPHKA. `ejournal.forda-mof.org` dialihkan ke halaman lain, jadi jurnal tidak lagi terbit di alamat itu.
+- **Domain hilang:** JPHKA. Pada 2026-10-27 `ejournal.forda-mof.org` dialihkan ke domain parkir `tokenomica.com`, subdomain `jphka`, `ojs`, dan `publikasi` menjawab HTTP 530, dan `www.forda-mof.org` hanya menyisakan halaman 752 bita. Alamat baru tidak ditemukan, jadi entri JPHKA dibiarkan apa adanya sampai *feed*-nya pulih; cakupan kehutanan ditopang iForest dan Mongabay.
 - **Diperbaiki:** SEAFDEC/AQD. Repositori `repository.seafdec.org.ph` menjawab 503, dialihkan ke `https://www.seafdec.org.ph/feed/` (20 entri, berhasil di CI).
 
 Dua penerbit hanya menolak jaringan lokal dan berhasil di CI: Reviews in Aquaculture (Wiley) dan Journal of Applied Aquaculture (Taylor & Francis). Karena itu hasil `wartahayati check` dari jaringan lokal hanya untuk menapis; build CI yang menentukan. Pada uji lokal tercatat 20 kegagalan, tiga lebih banyak daripada CI.
@@ -175,7 +175,7 @@ Kandidat yang diuji dan tidak dimasukkan:
 - Perkebunan kini dilayani Agroforestry Systems, Sugar Tech, dan Jurnal Agro Industri Perkebunan, ditambah Kementan dan CIFOR-ICRAF yang belum menyediakan RSS. Tanaman industri Indonesia (sawit, karet, kopi, kakao, tebu) masih tipis karena domain `ejurnal.litbang.pertanian.go.id` mati; yang perlu ditelusuri adalah pusat penelitian di bawah Kementan lewat alamat baru.
 - Botani, zoologi, dan mikrobiologi kini dilayani Botanical Studies, PhytoKeys, ZooKeys, Journal of Threatened Taxa, MycoKeys, dan Indonesian Journal of Biotechnology, di samping bioRxiv dan MDPI yang memblokir bot. Kebun raya dan museum zoologi di Asia belum ditemukan aliran yang layak.
 - Kehutanan bertambah iForest. JPHKA belum terselesaikan dan jurnal kehutanan Indonesia lain belum punya feed yang hidup.
-- Kementerian Kehutanan RI memerlukan verifikasi domain resmi.
+- Kementerian Kehutanan RI: domain resminya sudah terverifikasi pada 2026-10-27 di <https://www.kehutanan.go.id/> (pengganti `menlhk.go.id` setelah kementerian dipisah), tetapi situsnya belum menyediakan RSS, jadi masih berstatus kandidat sampai pengambil halaman daftar berita tersedia.
 - Sebagian besar situs kementerian tidak menyediakan RSS. Pengambil halaman daftar berita masih tahap rencana.
 
 **Sumber dari daftar bacaan yang sengaja tidak dimasukkan sebagai aliran berita:**
