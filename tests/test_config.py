@@ -19,6 +19,14 @@ def test_every_topic_has_a_primary_source():
         assert any(s.topics[0] == topic.slug for s in enabled), f"topik tanpa sumber utama: {topic.slug}"
 
 
+def test_disabled_sources_carry_a_note():
+    """Halaman status menampilkan alasan, jadi setiap sumber nonaktif wajib punya note."""
+    cfg = load()
+    for source in cfg.sources:
+        if not source.enabled:
+            assert source.note.strip(), f"sumber nonaktif tanpa note: {source.id}"
+
+
 def test_unknown_topic_is_rejected(tmp_path):
     bad = tmp_path / "s.yaml"
     bad.write_text(

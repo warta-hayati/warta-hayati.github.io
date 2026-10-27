@@ -21,10 +21,11 @@
 </table>
 </div>
 {% if candidates %}
-<h2 class="judul">Kandidat yang belum aktif</h2>
+<h2 class="judul">Sumber nonaktif</h2>
+<p class="kosong">Kandidat yang menunggu penilaian redaksi. Sumber yang gagal dimuat tidak dimatikan, jadi tidak ada di daftar ini.</p>
 <div class="tabel">
 <table>
-<thead><tr><th>Sumber</th><th>Tingkat</th><th>Alasan belum aktif</th></tr></thead>
+<thead><tr><th>Sumber</th><th>Tingkat</th><th>Alasan</th></tr></thead>
 <tbody>
 {% for s in candidates %}
 <tr><td><a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.name }}</a></td><td>{{ tiers[s.tier].label }}</td><td>{{ s.note }}</td></tr>
