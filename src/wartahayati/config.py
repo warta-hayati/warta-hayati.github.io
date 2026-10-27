@@ -9,6 +9,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG = ROOT / "config" / "sources.yaml"
 LANGS = {"id", "en"}
+# Aturan pengambilan daftar berita untuk sumber tanpa RSS.
+LIST_RULES = {"item", "title", "link", "date", "summary", "date_in_title"}
 
 
 class ConfigError(ValueError):
@@ -33,6 +35,7 @@ class Source:
     include: tuple[str, ...] = ()
     max_items: int = 6
     enabled: bool = True
+    list_rules: tuple = ()
     note: str = ""
 
 
@@ -78,6 +81,19 @@ def load(path: Path = DEFAULT_CONFIG) -> Config:
             raise ConfigError(f"sumber '{sid}': 'feed' harus 'auto' atau URL http(s)")
         if not _is_http(r["url"]):
             raise ConfigError(f"sumber '{sid}': 'url' harus diawali http:// atau https://")
+        aturan = r.get("list") or {}
+        if not isinstance(aturan, dict):
+            raise ConfigError(f"sumber '{sid}': 'list' harus berupa peta aturan")
+        if aturan and feed != "auto":
+            raise ConfigError(f"sumber '{sid}': 'list' dan 'feed' tidak boleh dipakai bersama")
+        asing = set(aturan) - LIST_RULES
+        if asing:
+            raise ConfigError(f"sumber '{sid}': aturan 'list' tidak dikenal {sorted(asing)}")
+        if aturan and not any(aturan.get(k) for k in ("item", "title")):
+            raise ConfigError(f"sumber '{sid}': 'list' butuh kolom 'item' atau 'title'")
+        for kunci, nilai in aturan.items():
+            if not isinstance(nilai, (str, bool)) or not str(nilai).strip():
+                raise ConfigError(f"sumber '{sid}': aturan 'list.{kunci}' harus teks atau nilai benar")
         sources.append(
             Source(
                 id=sid,
@@ -90,6 +106,7 @@ def load(path: Path = DEFAULT_CONFIG) -> Config:
                 include=tuple(r.get("include", [])),
                 max_items=int(r.get("max_items", default_max)),
                 enabled=bool(r.get("enabled", True)),
+                list_rules=tuple(sorted((k, v) for k, v in aturan.items())),
                 note=r.get("note", ""),
             )
         )

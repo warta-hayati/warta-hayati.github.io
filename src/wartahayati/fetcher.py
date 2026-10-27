@@ -13,6 +13,7 @@ import feedparser
 import requests
 
 from .config import Config, Source
+from .listpage import load_list
 from .normalize import compile_filter, merge, to_item
 
 log = logging.getLogger("wartahayati")
@@ -77,6 +78,8 @@ def discover(session: requests.Session, page_url: str) -> tuple[str, list]:
 def load_entries(source: Source, known_feeds: dict[str, str]) -> tuple[str, list]:
     with requests.Session() as session:
         session.headers["User-Agent"] = USER_AGENT
+        if source.list_rules:
+            return load_list(session, source)
         if source.feed != "auto":
             return source.feed, parse_feed(session, source.feed)
         cached = known_feeds.get(source.url)
