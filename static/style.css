@@ -106,6 +106,7 @@ th{background:var(--head)}
 .topik-nav{position:static;flex-wrap:wrap;overflow:visible;box-shadow:none;scroll-snap-type:none;padding:2px 0}
 .topik-nav a{font-size:13px}
 }
+/* Perangkat sentuh: semua sasaran ketuk utama berukuran minimal 44px. */
 @media (pointer:coarse){
 .box li a{display:flex;align-items:center;min-height:44px}
 .topik-nav a{display:flex;align-items:center;min-height:44px;padding:12px 12px}

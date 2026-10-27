@@ -1,8 +1,8 @@
 # Daftar sumber Warta Hayati.
 # feed: auto  -> feed dicari otomatis dari halaman 'url' lalu disimpan.
-# feed: URL   -> pola URL feed yang diketahui. Alamat eksplisit di bawah sudah diuji
-#                dengan `wartahayati check` pada 2026-10-27; rincian kegagalan ada di
-#                README bagian keadaan feed dan di halaman status situs.
+# feed: URL   -> pola URL feed yang diketahui. Alamat eksplisit di bawah sudah diuji dengan
+#                `wartahayati check`. Keadaan terkini tiap sumber ada di halaman status situs,
+#                bukan di README.
 # include     -> penyaring kata kunci (judul dan ringkasan, tanpa membedakan huruf besar kecil).
 # topics      -> topik pertama menentukan tempat sumber tampil di beranda.
 # enabled: false + note -> kandidat yang menunggu penilaian redaksi.
