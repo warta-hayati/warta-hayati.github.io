@@ -93,3 +93,21 @@ def test_stylesheet_defines_palette_for_every_topic(tmp_path):
         assert f"[data-topik={topic.slug}]" in css, f"warna topik hilang: {topic.slug}"
     assert "var(--t-bg)" in css
     assert "var(--t-ink)" in css
+
+
+def test_status_cells_carry_labels_for_mobile_cards(tmp_path):
+    cfg = load()
+    render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
+    html = (tmp_path / "out" / "status" / "index.html").read_text(encoding="utf-8")
+    assert html.count("data-label=") == html.count("<td"), "ada sel tabel tanpa label untuk tampilan kartu"
+
+
+def test_stylesheet_has_mobile_rules(tmp_path):
+    cfg = load()
+    render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
+    css = (tmp_path / "out" / "static" / "style.css").read_text(encoding="utf-8")
+    assert "@media (max-width:640px)" in css
+    assert "@media (pointer:coarse)" in css
+    assert "min-height:44px" in css
+    assert "scroll-snap-type:x proximity" in css
+    assert "attr(data-label)" in css

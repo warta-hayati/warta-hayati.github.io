@@ -31,8 +31,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .lang{display:flex;gap:6px}
 .lang button{min-width:44px;min-height:44px;padding:0 12px;border:1px solid var(--accent);border-radius:4px;background:#fff;color:var(--accent);font:inherit;font-size:13px;cursor:pointer}
 .lang button[aria-pressed=true]{background:var(--accent);color:#fff}
-.topik-nav{display:flex;overflow-x:auto;border-bottom:1px solid var(--line)}
-.topik-nav a{padding:10px 12px;border-bottom:3px solid transparent;color:var(--ink);font-size:14px;text-decoration:none;white-space:nowrap}
+.topik-nav{position:sticky;top:0;z-index:5;display:flex;overflow-x:auto;background:var(--ground);border-bottom:1px solid var(--line);scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;box-shadow:inset -14px 0 12px -12px rgba(27,31,26,.18)}
+.topik-nav a{padding:10px 12px;border-bottom:3px solid transparent;color:var(--ink);font-size:14px;text-decoration:none;white-space:nowrap;scroll-snap-align:start}
 .topik-nav a:hover{background:var(--head)}
 .topik-nav a[data-topik]::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--t);vertical-align:middle}
 .topik-nav a[aria-current=page]{border-bottom-color:var(--t);font-weight:500}
@@ -63,3 +63,30 @@ th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;verti
 th{background:var(--head)}
 .ok{color:var(--accent);font-weight:500}
 .gagal{color:#8A1F1F;font-weight:500}
+/* Penyesuaian ponsel: target sentuh 44px, tab topik lengket dengan snap,
+   dan tabel status berubah menjadi kartu supaya tidak perlu digeser ke samping. */
+@media (max-width:640px){
+.wrap{padding:0 16px 32px}
+.brand{min-width:0;flex:1 1 100%}
+.name{font-size:24px}
+.tag{font-size:12px}
+#cari{flex:1 1 100%;width:auto}
+.judul{font-size:20px}
+.box header{flex-wrap:wrap}
+.box ul{font-size:14px}
+.box li{flex-wrap:wrap;padding:8px 0}
+.box li time{margin-left:auto}
+.tier,.bhs{font-size:12px}
+.tabel{overflow-x:visible}
+.tabel table,.tabel thead,.tabel tbody,.tabel tr,.tabel td{display:block}
+.tabel thead{display:none}
+.tabel tr{margin-bottom:12px;padding:4px 0;border:1px solid var(--line);border-radius:4px;background:#fff}
+.tabel td{border-bottom:1px solid #E4E6DF;overflow-wrap:anywhere}
+.tabel tr td:last-child{border-bottom:0}
+.tabel td::before{content:attr(data-label);display:block;color:var(--meta);font-size:12px}
+}
+@media (pointer:coarse){
+.box li a{display:flex;align-items:center;min-height:44px}
+.topik-nav a{display:flex;align-items:center;min-height:44px;padding:12px 12px}
+.tabel td a{display:inline-block;padding:6px 0}
+}

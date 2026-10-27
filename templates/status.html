@@ -9,12 +9,12 @@
 <tbody>
 {% for r in rows %}
 <tr>
-<td><a href="{{ r.source.url }}" target="_blank" rel="noopener noreferrer">{{ r.source.name }}</a></td>
-<td>{{ tiers[r.source.tier].label }}</td>
-<td>{% if r.health.ok %}<span class="ok">Berhasil</span>{% elif r.health.checked %}<span class="gagal">Gagal</span>{% else %}Belum diperiksa{% endif %}</td>
-<td>{% if r.health.last_ok %}<time datetime="{{ r.health.last_ok }}">{{ r.health.last_ok[:10] }}</time>{% else %}Belum pernah{% endif %}</td>
-<td>{{ r.health.kept if r.health.kept is not none else 0 }}</td>
-<td>{% if r.health.ok %}{{ r.health.feed }}{% else %}{{ r.health.error or '' }}{% endif %}</td>
+<td data-label="Sumber"><a href="{{ r.source.url }}" target="_blank" rel="noopener noreferrer">{{ r.source.name }}</a></td>
+<td data-label="Tingkat">{{ tiers[r.source.tier].label }}</td>
+<td data-label="Status">{% if r.health.ok %}<span class="ok">Berhasil</span>{% elif r.health.checked %}<span class="gagal">Gagal</span>{% else %}Belum diperiksa{% endif %}</td>
+<td data-label="Terakhir berhasil">{% if r.health.last_ok %}<time datetime="{{ r.health.last_ok }}">{{ r.health.last_ok[:10] }}</time>{% else %}Belum pernah{% endif %}</td>
+<td data-label="Judul">{{ r.health.kept if r.health.kept is not none else 0 }}</td>
+<td data-label="Feed atau galat">{% if r.health.ok %}{{ r.health.feed }}{% else %}{{ r.health.error or '' }}{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>
@@ -28,7 +28,7 @@
 <thead><tr><th>Sumber</th><th>Tingkat</th><th>Alasan</th></tr></thead>
 <tbody>
 {% for s in candidates %}
-<tr><td><a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.name }}</a></td><td>{{ tiers[s.tier].label }}</td><td>{{ s.note }}</td></tr>
+<tr><td data-label="Sumber"><a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.name }}</a></td><td data-label="Tingkat">{{ tiers[s.tier].label }}</td><td data-label="Alasan">{{ s.note }}</td></tr>
 {% endfor %}
 </tbody>
 </table>
