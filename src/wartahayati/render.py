@@ -76,6 +76,9 @@ def render(cfg: Config, state: dict, out: Path = ROOT / "dist") -> None:
     )
 
     shutil.copytree(ROOT / "static", out / "static")
+    # Sebagian peramban, pembaca feed, dan layanan lain meminta /favicon.ico
+    # langsung di akar situs, tanpa membaca tag <link rel="icon">.
+    shutil.copyfile(ROOT / "static" / "favicon.ico", out / "favicon.ico")
     export = {
         "updated": state.get("updated"),
         "sources": [

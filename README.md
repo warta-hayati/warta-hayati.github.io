@@ -53,7 +53,7 @@ warta-hayati/
 │   ├── render.py              pembangun situs statis
 │   └── cli.py                 perintah build, fetch, render, check
 ├── templates/                 templat Jinja2
-├── static/                    style.css dan app.js
+├── static/                    style.css, app.js, dan berkas ikon situs
 ├── tests/                     pengujian pytest
 ├── .github/workflows/build.yml
 └── data/                      state.json dibuat saat dijalankan (tidak masuk Git)

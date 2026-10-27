@@ -19,6 +19,7 @@ def test_render_publishes_icons_and_og_image(tmp_path):
     out = tmp_path / "out"
     for name in ("favicon.ico", "favicon.png", "apple-touch-icon.png", "og-image.jpg"):
         assert (out / "static" / name).exists(), f"berkas ikon hilang: {name}"
+    assert (out / "favicon.ico").exists(), "favicon.ico tidak ada di akar situs"
     index = (out / "index.html").read_text(encoding="utf-8")
     assert 'rel="icon"' in index
     assert 'rel="apple-touch-icon"' in index
