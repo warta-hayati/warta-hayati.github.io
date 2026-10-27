@@ -39,6 +39,20 @@ def test_homepage_lists_every_topic_and_drops_empty_boxes(tmp_path):
     assert html.count("Belum ada judul dari sumber topik ini") == len(cfg.topics)
 
 
+def test_box_without_items_is_hidden(tmp_path):
+    cfg = load()
+    first = next(s for s in cfg.sources if s.enabled)
+    state = {
+        "items": {first.id: [{"title": "Judul uji", "link": "https://a.id/x", "published": "2026-10-27T00:00:00+00:00"}]},
+        "health": {},
+        "updated": None,
+    }
+    render(cfg, state, tmp_path / "out")
+    html = (tmp_path / "out" / "index.html").read_text(encoding="utf-8")
+    assert "Judul uji" in html
+    assert html.count('class="box"') == 1
+
+
 def test_render_escapes_titles(tmp_path):
     cfg = load()
     first = next(s for s in cfg.sources if s.enabled)

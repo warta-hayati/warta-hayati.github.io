@@ -59,7 +59,7 @@ def render(cfg: Config, state: dict, out: Path = ROOT / "dist") -> None:
         sections=[(t, filled(primary[t.slug])) for t in cfg.topics],
     )
     for t in cfg.topics:
-        write(f"topik/{t.slug}/index.html", "topik.html", f"topik/{t.slug}/", root="../../", current=t.slug, topic=t, boxes=by_topic[t.slug])
+        write(f"topik/{t.slug}/index.html", "topik.html", f"topik/{t.slug}/", root="../../", current=t.slug, topic=t, boxes=filled(by_topic[t.slug]))
 
     rows = sorted(
         ({"source": s, "health": health.get(s.id, {})} for s in enabled),

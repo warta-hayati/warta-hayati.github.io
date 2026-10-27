@@ -5,8 +5,12 @@
 {% block main %}
 <section class="topik">
 <h1 class="judul">{{ topic.name }}</h1>
+{% if boxes %}
 <div class="grid">
 {% for b in boxes %}{{ box(b, tiers) }}{% endfor %}
 </div>
+{% else %}
+<p class="kosong">Belum ada judul dari sumber topik ini. Keadaan sumber tercatat di <a href="{{ root }}status/">halaman status</a>.</p>
+{% endif %}
 </section>
 {% endblock %}
