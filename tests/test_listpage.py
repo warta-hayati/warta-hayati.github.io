@@ -103,3 +103,11 @@ def test_kkp_fixture_yields_news():
     assert all(b["link"].startswith("https://kkp.go.id/news/news-detail/") for b in hasil)
     assert all(b["published_parsed"] for b in hasil)
     assert all(20 < len(b["title"]) < 200 for b in hasil)
+
+
+def test_kementan_fixture_yields_news():
+    sumber, hasil = _sumber_dari_fixture("kementan")
+    assert len(hasil) >= 15
+    assert all(b["link"].startswith("https://pertanian.go.id/index.php/news/view/") for b in hasil)
+    assert all(b["published_parsed"] for b in hasil)
+    assert all(20 < len(b["title"]) < 250 for b in hasil)
