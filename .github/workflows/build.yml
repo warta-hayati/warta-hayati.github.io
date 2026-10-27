@@ -46,6 +46,8 @@ jobs:
           restore-keys: warta-hayati-state-
       - name: Ambil feed dan bangun situs
         run: wartahayati build
+      - name: Buang penanda build dari artefak
+        run: rm -f dist/.wartahayati
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

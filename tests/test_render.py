@@ -13,6 +13,21 @@ def test_render_with_empty_state_writes_all_pages(tmp_path):
         assert (out / "topik" / topic.slug / "index.html").exists()
 
 
+def test_render_publishes_icons_and_og_image(tmp_path):
+    cfg = load()
+    render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
+    out = tmp_path / "out"
+    for name in ("favicon.ico", "favicon.png", "apple-touch-icon.png", "og-image.jpg"):
+        assert (out / "static" / name).exists(), f"berkas ikon hilang: {name}"
+    index = (out / "index.html").read_text(encoding="utf-8")
+    assert 'rel="icon"' in index
+    assert 'rel="apple-touch-icon"' in index
+    assert 'property="og:image"' in index
+    assert 'href="static/favicon.ico"' in index
+    topik = (out / "topik" / cfg.topics[0].slug / "index.html").read_text(encoding="utf-8")
+    assert 'href="../../static/favicon.ico"' in topik
+
+
 def test_render_escapes_titles(tmp_path):
     cfg = load()
     first = next(s for s in cfg.sources if s.enabled)
