@@ -18,6 +18,7 @@ Tata letaknya mengikuti gaya Techurls: satu kotak per sumber, berisi enam judul 
 - Filter bahasa (ID, EN) dan pencarian judul. Keduanya berjalan di peramban, tanpa server.
 - Penemuan *feed* otomatis untuk sumber yang alamat *feed*-nya belum diketahui.
 - Riwayat judul per sumber, sehingga kotak tetap terisi ketika *feed* sedang kosong atau gagal.
+- Kotak tanpa judul disembunyikan dari beranda dan halaman topik. Keadaan setiap sumber tampil di halaman `status/`.
 - Halaman `status/` yang menampilkan sumber gagal, alasan galat, dan daftar kandidat yang belum aktif.
 - Ekspor `data.json` untuk dipakai ulang oleh peneliti dan pengembang lain.
 - Situs statis tanpa basis data. Biaya hosting nol di GitHub Pages.
@@ -156,7 +157,7 @@ Uji lokal terakhir (2026-10-27) mencatat **17 gagal dari 44 sumber aktif**. Tiga
 - **Tanpa RSS, belum terselesaikan:** BRIN (dua entri), SEARCA, CIFOR-ICRAF, dan AgriRxiv. Halaman beritanya dibuat JavaScript sehingga judulnya tidak ada di HTML mentah, tidak ada endpoint JSON (`/wp-json`, `/jsonapi`), dan jalur `/feed/` maupun `/rss.xml` alternatif sudah dicoba tanpa hasil.
 - **Penerbit menghentikan RSS:** Trees, Forests and People dan Aquacultural Engineering (404 dari `rss.sciencedirect.com`), serta Agriculture and Food Security (alamat BMC menyajikan HTML, bukan XML).
 - **Menolak bot dengan 403:** Forests, Plants, Diversity, dan Microorganisms (MDPI). Ini blokir akses, bukan *feed* yang hilang.
-- **Aquaculture Research:** 404 pada kedua ISSN, cetak `1355557x` dan daring `13652109`. Tidak ada alamat pengganti yang ditemukan.
+- **Aquaculture Research:** entri memakai ISSN daring `13652109`, mengikuti pola *Reviews in Aquaculture* yang berhasil. Alamat `most-recent` tetap 404 di kedua ISSN (`1355557x` dan `13652109`), jadi tidak ada alamat pengganti yang ditemukan.
 - **Domain hilang:** JPHKA. Pada 2026-10-27 `ejournal.forda-mof.org` dialihkan ke domain parkir `tokenomica.com`, subdomain `jphka`, `ojs`, dan `publikasi` menjawab HTTP 530, dan `www.forda-mof.org` hanya menyisakan halaman 752 bita. Alamat baru tidak ditemukan, jadi entri JPHKA dibiarkan apa adanya sampai *feed*-nya pulih; cakupan kehutanan ditopang iForest dan Mongabay.
 - **Diperbaiki:** SEAFDEC/AQD. Repositori `repository.seafdec.org.ph` menjawab 503, dialihkan ke `https://www.seafdec.org.ph/feed/` (20 entri, berhasil di CI).
 
