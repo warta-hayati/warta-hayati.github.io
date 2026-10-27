@@ -1,6 +1,11 @@
+from pathlib import Path
+
 import pytest
 
+from wartahayati.config import load
 from wartahayati.listpage import butir, cari_tanggal, parse, select
+
+DATA = Path(__file__).parent / "data"
 
 HTML = """
 <div class="daftar" class="kelas-kedua">
@@ -64,3 +69,21 @@ def test_butir_needs_title_and_link():
 def test_select_rejects_unknown_selector():
     with pytest.raises(ValueError):
         select(parse("<p>x</p>"), ":bukan-pemilih")
+
+
+def _sumber_dari_fixture(sid: str):
+    """Ambil aturan asli dari config lalu uji terhadap halaman tersimpan."""
+    sumber = next(s for s in load().sources if s.id == sid)
+    html = (DATA / f"{sid}.html").read_text(encoding="utf-8", errors="replace")
+    return sumber, butir(parse(html), dict(sumber.list_rules), sumber.url)
+
+
+def test_fao_asia_pasifik_fixture_yields_news():
+    sumber, hasil = _sumber_dari_fixture("fao-asia-pasifik")
+    assert sumber.list_rules, "aturan 'list' hilang dari config"
+    assert len(hasil) >= 15
+    asia = [b for b in hasil if b["link"].startswith("https://www.fao.org/asiapacific/news/news-detail/")]
+    assert len(asia) >= 15
+    assert all(b["link"].startswith("https://www.fao.org/") for b in hasil)
+    assert all(b["published_parsed"] for b in hasil)
+    assert all(len(b["title"]) > 20 for b in hasil)

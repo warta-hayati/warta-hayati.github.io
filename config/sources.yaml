@@ -50,7 +50,14 @@ sources:
   - {id: jphka, name: "Jurnal Penelitian Hutan dan Konservasi Alam", url: "https://ejournal.forda-mof.org/ejournal-litbang/index.php/JPHKA", tier: jurnal, lang: id, topics: [kehutanan]}
 
   # Lembaga dan riset Asia-Pasifik
-  - {id: fao-asia-pasifik, name: "FAO Asia dan Pasifik", url: "https://www.fao.org/asiapacific/news/", tier: lembaga, lang: en, topics: [pertanian, perikanan-tawar, perikanan-laut, kehutanan]}
+  - id: fao-asia-pasifik
+    name: "FAO Asia dan Pasifik"
+    url: "https://www.fao.org/asiapacific/news/"
+    tier: lembaga
+    lang: en
+    topics: [pertanian, perikanan-tawar, perikanan-laut, kehutanan]
+    list: {item: "div.d-list-news", title: "h5.title-link a", date: "h6.date", summary: "div.d-list-content p"}
+    note: "Tanpa RSS. Daftar berita dibaca dari halaman memakai aturan 'list'."
   - {id: cgiar-sea, name: "CGIAR Asia Tenggara dan Pasifik", url: "https://www.cgiar.org/cgiar-regions/southeast-asia-and-pacific/", tier: riset, lang: en, topics: [pertanian, perikanan-tawar]}
   - {id: irri-rice-today, name: "Rice Today (IRRI)", url: "https://ricetoday.irri.org/", tier: riset, lang: en, topics: [pertanian]}
   - {id: searca, name: "SEARCA", url: "https://www.searca.org/", tier: riset, lang: en, topics: [pertanian]}
