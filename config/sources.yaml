@@ -55,7 +55,9 @@ sources:
   - {id: searca, name: "SEARCA", url: "https://www.searca.org/", tier: riset, lang: en, topics: [pertanian]}
   - {id: worldfish, name: "WorldFish", url: "https://www.worldfishcenter.org/", tier: riset, lang: en, topics: [perikanan-tawar, perikanan-laut]}
   - {id: naca, name: "NACA", url: "https://enaca.org/", tier: riset, lang: en, topics: [perikanan-tawar, perikanan-laut]}
-  - {id: seafdec-aqd, name: "SEAFDEC/AQD", url: "https://repository.seafdec.org.ph/", tier: riset, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  # Repositori repository.seafdec.org.ph sedang pemeliharaan (503, diuji 2026-10-27),
+  # jadi dipakai feed berita SEAFDEC yang aktif: 20 entri.
+  - {id: seafdec-aqd, name: "SEAFDEC/AQD", url: "https://www.seafdec.org.ph/", feed: "https://www.seafdec.org.ph/feed/", tier: riset, lang: en, topics: [perikanan-tawar, perikanan-laut]}
   - {id: cifor-icraf, name: "CIFOR-ICRAF (ASEAN)", url: "https://www.worldagroforestry.org/country/asean/news", tier: riset, lang: en, topics: [kehutanan, perkebunan]}
 
   # Media
