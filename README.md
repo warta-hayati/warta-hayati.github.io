@@ -1,7 +1,5 @@
 # Warta Hayati
 
-[![Bangun dan terbitkan](https://github.com/warta-hayati/warta-hayati.github.io/actions/workflows/build.yml/badge.svg)](https://github.com/warta-hayati/warta-hayati.github.io/actions/workflows/build.yml)
-
 Agregator berita dan artikel bidang pertanian, perikanan, kehutanan, dan ilmu hayati dari sumber
 Asia. Situs statis tanpa basis data, dibangun ulang setiap tiga jam.
 
