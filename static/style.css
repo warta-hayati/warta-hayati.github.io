@@ -96,6 +96,12 @@ th{background:var(--head)}
 .tabel tr td:last-child{border-bottom:0}
 .tabel td::before{content:attr(data-label);display:block;color:var(--meta);font-size:12px}
 }
+/* Layar sempit: tab topik dibungkus ke beberapa baris, jadi tidak ada geser
+   mendatar. Tidak lengket supaya tinggi layar tidak termakan daftar topik. */
+@media (max-width:900px){
+.topik-nav{position:static;flex-wrap:wrap;overflow:visible;box-shadow:none;scroll-snap-type:none;padding:2px 0}
+.topik-nav a{font-size:13px}
+}
 @media (pointer:coarse){
 .box li a{display:flex;align-items:center;min-height:44px}
 .topik-nav a{display:flex;align-items:center;min-height:44px;padding:12px 12px}

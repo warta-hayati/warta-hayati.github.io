@@ -111,8 +111,11 @@ def test_stylesheet_has_mobile_rules(tmp_path):
     assert "@media (max-width:640px)" in css
     assert "@media (pointer:coarse)" in css
     assert "min-height:44px" in css
-    assert "scroll-snap-type:x proximity" in css
     assert "attr(data-label)" in css
+    # Tab topik tidak boleh mengandalkan geser mendatar di layar sempit.
+    assert "@media (max-width:900px)" in css
+    assert ".topik-nav{position:static;flex-wrap:wrap;overflow:visible" in css
+    assert "scroll-snap-type:x proximity" in css, "tab mendatar untuk layar lebar hilang"
 
 
 def test_about_page_and_contact_reachable(tmp_path):
