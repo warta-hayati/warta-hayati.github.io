@@ -99,6 +99,8 @@ sources:
 
   - {id: botanical-studies, name: "Botanical Studies", url: "https://botanicalstudies.springeropen.com/", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=40529&channel-name=Botanical%20Studies", tier: jurnal, lang: en, topics: [botani]}
 
+  - {id: biodiversitas, name: "Biodiversitas", url: "https://smujo.id/biodiv/", feed: "https://smujo.id/biodiv/gateway/plugin/WebFeedGatewayPlugin/atom", tier: jurnal, lang: en, topics: [botani, zoologi]}
+
   # Kandidat yang belum aktif
   - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.menlhk.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Verifikasi domain resmi setelah kementerian kehutanan dipisah dari KLHK."}
   - {id: bps, name: "Badan Pusat Statistik", url: "https://www.bps.go.id/", tier: pemerintah, lang: id, topics: [pertanian], enabled: false, note: "Berupa rilis statistik berkala. Cocok sebagai modul data berkala."}
