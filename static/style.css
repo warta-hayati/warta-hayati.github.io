@@ -41,7 +41,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .judul a{color:inherit;text-decoration:none}
 .judul a:hover{text-decoration:underline}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;align-items:start}
-.box{border:1px solid var(--line);border-radius:4px;background:var(--card)}
+.box{overflow:hidden;border:1px solid var(--line);border-radius:4px;background:var(--card)}
 .box header{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);border-top:3px solid var(--t);background:var(--t-bg)}
 .box header strong{flex:1;font-size:14px}
 .box header strong a{color:var(--ink);text-decoration:none}
