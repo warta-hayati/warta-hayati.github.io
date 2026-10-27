@@ -97,6 +97,8 @@ sources:
   - {id: biorxiv-zoology, name: "bioRxiv Zoology", url: "https://www.biorxiv.org/collection/zoology", feed: "https://connect.biorxiv.org/biorxiv_xml.php?subject=zoology", tier: preprint, lang: en, topics: [zoologi]}
   - {id: biorxiv-microbiology, name: "bioRxiv Microbiology", url: "https://www.biorxiv.org/collection/microbiology", feed: "https://connect.biorxiv.org/biorxiv_xml.php?subject=microbiology", tier: preprint, lang: en, topics: [mikrobiologi]}
 
+  - {id: botanical-studies, name: "Botanical Studies", url: "https://botanicalstudies.springeropen.com/", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=40529&channel-name=Botanical%20Studies", tier: jurnal, lang: en, topics: [botani]}
+
   # Kandidat yang belum aktif
   - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.menlhk.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Verifikasi domain resmi setelah kementerian kehutanan dipisah dari KLHK."}
   - {id: bps, name: "Badan Pusat Statistik", url: "https://www.bps.go.id/", tier: pemerintah, lang: id, topics: [pertanian], enabled: false, note: "Berupa rilis statistik berkala. Cocok sebagai modul data berkala."}
