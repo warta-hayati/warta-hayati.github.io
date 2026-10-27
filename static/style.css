@@ -1,16 +1,19 @@
 :root{--ground:#FBFBF8;--ink:#1B1F1A;--meta:#5C625A;--link:#1F4E8C;--link-hover:#0F2F5C;--accent:#2E6B3F;--line:#D0D4C8;--head:#EEF1E8;--card:#fff}
-/* Palet topik. --t untuk garis dan titik, --t-ink untuk teks dan lencana,
-   --t-bg untuk tint kepala kotak. Nilai bawaan (tanpa data-topik) memakai hijau
-   aksen lama, jadi topik baru di config tidak pernah merusak tampilan. */
-:root{--t:var(--accent);--t-ink:var(--accent);--t-bg:var(--head)}
-[data-topik=pertanian]{--t:#6E9427;--t-ink:#47631A;--t-bg:#F1F6E6}
-[data-topik=perkebunan]{--t:#1E5B2E;--t-ink:#164724;--t-bg:#E8F1E9}
-[data-topik=perikanan-tawar]{--t:#3E9BC4;--t-ink:#1E6E93;--t-bg:#E6F2F8}
-[data-topik=perikanan-laut]{--t:#17436E;--t-ink:#123457;--t-bg:#E7EEF5}
-[data-topik=kehutanan]{--t:#14624F;--t-ink:#0F4A3C;--t-bg:#E6F1ED}
-[data-topik=botani]{--t:#6E8B1F;--t-ink:#4E6315;--t-bg:#F0F4E3}
-[data-topik=zoologi]{--t:#8A5A1F;--t-ink:#6B4415;--t-bg:#F7EFE4}
-[data-topik=mikrobiologi]{--t:#4F2D6B;--t-ink:#3A2150;--t-bg:#F1EAF7}
+/* Palet topik. --t untuk garis dan titik, --t-ink untuk teks berwarna,
+   --t-solid untuk latar berisi dengan teks putih (tab aktif dan lencana tingkat),
+   --t-bg untuk tint kepala kotak. Ketiga-tiganya sudah diuji kontras: --t-ink dan
+   --t-bg minimal 4,5:1, --t-solid minimal 4,5:1 terhadap teks putih.
+   Nilai bawaan (tanpa data-topik) memakai hijau aksen lama, jadi topik baru di
+   config tidak pernah merusak tampilan. */
+:root{--t:var(--accent);--t-ink:var(--accent);--t-solid:var(--accent);--t-bg:var(--head)}
+[data-topik=pertanian]{--t:#6E9427;--t-ink:#47631A;--t-solid:#55761C;--t-bg:#F1F6E6}
+[data-topik=perkebunan]{--t:#1E5B2E;--t-ink:#164724;--t-solid:#276B37;--t-bg:#E8F1E9}
+[data-topik=perikanan-tawar]{--t:#3E9BC4;--t-ink:#1E6E93;--t-solid:#2578A0;--t-bg:#E6F2F8}
+[data-topik=perikanan-laut]{--t:#17436E;--t-ink:#123457;--t-solid:#1D5182;--t-bg:#E7EEF5}
+[data-topik=kehutanan]{--t:#14624F;--t-ink:#0F4A3C;--t-solid:#1A7359;--t-bg:#E6F1ED}
+[data-topik=botani]{--t:#6E8B1F;--t-ink:#4E6315;--t-solid:#5E7818;--t-bg:#F0F4E3}
+[data-topik=zoologi]{--t:#8A5A1F;--t-ink:#6B4415;--t-solid:#8A5A1F;--t-bg:#F7EFE4}
+[data-topik=mikrobiologi]{--t:#4F2D6B;--t-ink:#3A2150;--t-solid:#63388A;--t-bg:#F1EAF7}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{margin:0;background:var(--ground);color:var(--ink);font:400 15px/1.45 "IBM Plex Sans",Helvetica,Arial,sans-serif}
@@ -36,17 +39,19 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .topik-nav a{padding:10px 12px;border-bottom:3px solid transparent;color:var(--ink);font-size:14px;text-decoration:none;white-space:nowrap;scroll-snap-align:start}
 .topik-nav a:hover{background:var(--head)}
 .topik-nav a[data-topik]::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--t);vertical-align:middle}
-.topik-nav a[aria-current=page]{border-bottom-color:var(--t);font-weight:500}
-.judul{margin:28px 0 10px;padding-left:10px;border-left:4px solid var(--t);font:600 22px/1.2 Newsreader,Georgia,serif}
+.topik-nav a[aria-current=page]{border-bottom-color:var(--t-solid);background:var(--t-solid);color:#fff;font-weight:500}
+.topik-nav a[aria-current=page]:hover{background:var(--t-solid);color:#fff}
+.topik-nav a[aria-current=page]::before{background:#fff}
+.judul{margin:28px 0 10px;padding-left:10px;border-left:5px solid var(--t);color:var(--t-ink);font:600 22px/1.2 Newsreader,Georgia,serif}
 .judul a{color:inherit;text-decoration:none}
 .judul a:hover{text-decoration:underline}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;align-items:start}
 .box{overflow:hidden;border:1px solid var(--line);border-radius:4px;background:var(--card)}
-.box header{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);border-top:3px solid var(--t);background:var(--t-bg)}
+.box header{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);border-top:4px solid var(--t);background:var(--t-bg)}
 .box header strong{flex:1;font-size:14px}
 .box header strong a{color:var(--ink);text-decoration:none}
 .box header strong a:hover{text-decoration:underline}
-.tier{padding:1px 6px;border:1px solid var(--t-ink);border-radius:3px;color:var(--t-ink);font-size:11px}
+.tier{padding:1px 6px;border:1px solid var(--t-solid);border-radius:3px;background:var(--t-solid);color:#fff;font-size:11px}
 .bhs{color:var(--meta);font-size:11px}
 .box ul{margin:0;padding:0 12px 4px;list-style:none;font-size:13px;line-height:1.4}
 .box li{display:flex;gap:8px;padding:6px 0;border-top:1px solid #E4E6DF}

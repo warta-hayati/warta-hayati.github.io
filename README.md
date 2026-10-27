@@ -28,7 +28,9 @@ Tata letaknya mengikuti gaya Techurls: satu kotak per sumber, berisi enam judul 
 
 ## Tampilan
 
-Warna topik didefinisikan di `static/style.css` sebagai tiga variabel per topik: `--t` untuk garis dan titik, `--t-ink` untuk teks dan lencana, `--t-bg` untuk tint kepala kotak. Pemetaannya memakai atribut `data-topik` pada seksi topik, tab navigasi, dan pita tepi atas. Topik yang belum punya aturan warna otomatis memakai aksen hijau bawaan, jadi menambah topik di `config/sources.yaml` tidak pernah merusak tampilan. Rasio kontras setiap pasangan warna minimal 4,5:1 untuk teks dan 3:1 untuk garis.
+Warna topik didefinisikan di `static/style.css` sebagai empat variabel per topik: `--t` untuk garis, titik, dan pita, `--t-ink` untuk teks berwarna (judul seksi), `--t-solid` untuk latar berisi dengan teks putih (tab topik yang sedang aktif dan lencana tingkat), serta `--t-bg` untuk tint kepala kotak. Pemetaannya memakai atribut `data-topik` pada seksi topik, tab navigasi, dan pita tepi atas. Topik yang belum punya aturan warna otomatis memakai aksen hijau bawaan, jadi menambah topik di `config/sources.yaml` tidak pernah merusak tampilan.
+
+Rasio kontras sudah diperiksa: `--t-ink` pada tint dan pada kartu minimal 4,5:1, `--t` pada latar minimal 3:1, dan teks putih di atas `--t-solid` minimal 4,75:1. Karena itu warna aksen yang terang seperti hijau muda tidak dipakai sebagai latar berteks putih: pada `#6E9427` teks putih hanya mencapai 3,54:1.
 
 Halaman `tentang/` menjelaskan situs ini untuk pembaca awam dan memuat jalur kontak. Pengelola: Eka Y Saputra — <ekajogja@gmail.com>, <https://ekajogja.com>.
 

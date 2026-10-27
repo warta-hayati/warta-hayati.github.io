@@ -95,6 +95,9 @@ def test_stylesheet_defines_palette_for_every_topic(tmp_path):
         assert f"[data-topik={topic.slug}]" in css, f"warna topik hilang: {topic.slug}"
     assert "var(--t-bg)" in css
     assert "var(--t-ink)" in css
+    assert "var(--t-solid)" in css, "warna isi untuk teks putih hilang"
+    # Tab aktif dan lencana tingkat memakai latar berisi dengan teks putih.
+    assert "background:var(--t-solid);color:#fff" in css
 
 
 def test_status_cells_carry_labels_for_mobile_cards(tmp_path):
