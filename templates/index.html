@@ -14,7 +14,7 @@
 {% endblock %}
 {% block main %}
 {% for topic, boxes in sections %}
-<section class="topik">
+<section class="topik" data-topik="{{ topic.slug }}">
 <h2 class="judul"><a href="{{ root }}topik/{{ topic.slug }}/">{{ topic.name }}</a></h2>
 {% if boxes %}
 <div class="grid">

@@ -27,6 +27,7 @@
 </head>
 <body>
 <a class="skip" href="#isi">Lewati ke isi</a>
+<div class="pita"{% if current not in (none, 'status', 'tentang') %} data-topik="{{ current }}"{% endif %} aria-hidden="true"></div>
 <div class="wrap">
 <header class="top">
 <div class="brand">
@@ -43,7 +44,7 @@
 <nav class="topik-nav" aria-label="Topik">
 <a href="{{ root or './' }}"{% if current is none %} aria-current="page"{% endif %}>Semua</a>
 {% for t in topics %}
-<a href="{{ root }}topik/{{ t.slug }}/"{% if current == t.slug %} aria-current="page"{% endif %}>{{ t.name }}</a>
+<a href="{{ root }}topik/{{ t.slug }}/" data-topik="{{ t.slug }}"{% if current == t.slug %} aria-current="page"{% endif %}>{{ t.name }}</a>
 {% endfor %}
 </nav>
 <main id="isi">

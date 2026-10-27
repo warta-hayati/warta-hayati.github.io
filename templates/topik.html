@@ -3,7 +3,7 @@
 {% block title %}Berita {{ topic.name }} Terbaru | Warta Hayati{% endblock %}
 {% block desc %}Judul terbaru {{ topic.name|lower }} dari sumber tepercaya di Asia: lembaga pemerintah, lembaga riset, jurnal, dan media.{% endblock %}
 {% block main %}
-<section class="topik">
+<section class="topik" data-topik="{{ topic.slug }}">
 <h1 class="judul">{{ topic.name }}</h1>
 {% if boxes %}
 <div class="grid">

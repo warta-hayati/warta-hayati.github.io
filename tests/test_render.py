@@ -65,3 +65,31 @@ def test_render_escapes_titles(tmp_path):
     render(cfg, state, tmp_path / "out")
     html = (tmp_path / "out" / "index.html").read_text(encoding="utf-8")
     assert "<script>x</script>" not in html
+
+
+def test_every_topic_section_and_tab_carries_its_colour_key(tmp_path):
+    cfg = load()
+    render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
+    out = tmp_path / "out"
+    html = (out / "index.html").read_text(encoding="utf-8")
+    for topic in cfg.topics:
+        assert f'<section class="topik" data-topik="{topic.slug}">' in html, f"seksi tanpa kunci warna: {topic.slug}"
+        assert f'<a href="topik/{topic.slug}/" data-topik="{topic.slug}"' in html, f"tab tanpa kunci warna: {topic.slug}"
+    # Delapan seksi beranda ditambah delapan tab topik.
+    assert html.count("data-topik=") == len(cfg.topics) * 2
+
+    slug = cfg.topics[0].slug
+    topik = (out / "topik" / slug / "index.html").read_text(encoding="utf-8")
+    assert f'<section class="topik" data-topik="{slug}">' in topik
+    # Pita di tepi atas memakai warna topik halaman ini.
+    assert f'<div class="pita" data-topik="{slug}"' in topik
+
+
+def test_stylesheet_defines_palette_for_every_topic(tmp_path):
+    cfg = load()
+    render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
+    css = (tmp_path / "out" / "static" / "style.css").read_text(encoding="utf-8")
+    for topic in cfg.topics:
+        assert f"[data-topik={topic.slug}]" in css, f"warna topik hilang: {topic.slug}"
+    assert "var(--t-bg)" in css
+    assert "var(--t-ink)" in css
