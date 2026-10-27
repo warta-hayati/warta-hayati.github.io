@@ -17,7 +17,7 @@ def test_render_publishes_icons_and_og_image(tmp_path):
     cfg = load()
     render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
     out = tmp_path / "out"
-    for name in ("favicon.ico", "favicon.png", "apple-touch-icon.png", "og-image.jpg"):
+    for name in ("favicon.ico", "favicon.png", "apple-touch-icon.png", "og-image.jpg", "logo-warta-hayati-96.png"):
         assert (out / "static" / name).exists(), f"berkas ikon hilang: {name}"
     assert (out / "favicon.ico").exists(), "favicon.ico tidak ada di akar situs"
     index = (out / "index.html").read_text(encoding="utf-8")
@@ -25,8 +25,10 @@ def test_render_publishes_icons_and_og_image(tmp_path):
     assert 'rel="apple-touch-icon"' in index
     assert 'property="og:image"' in index
     assert 'href="static/favicon.ico"' in index
+    assert '<img class="logo" src="static/logo-warta-hayati-96.png"' in index, "logo tidak dipakai di beranda"
     topik = (out / "topik" / cfg.topics[0].slug / "index.html").read_text(encoding="utf-8")
     assert 'href="../../static/favicon.ico"' in topik
+    assert '<img class="logo" src="../../static/logo-warta-hayati-96.png"' in topik, "logo tidak dipakai di halaman topik"
 
 
 def test_homepage_lists_every_topic_and_drops_empty_boxes(tmp_path):
