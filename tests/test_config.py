@@ -11,6 +11,14 @@ def test_default_config_is_valid_and_covers_every_topic():
     assert len({s.id for s in cfg.sources}) == len(cfg.sources)
 
 
+def test_every_topic_has_a_primary_source():
+    """Topik pertama pada 'topics' menentukan seksi beranda, jadi setiap topik wajib punya."""
+    cfg = load()
+    enabled = [s for s in cfg.sources if s.enabled]
+    for topic in cfg.topics:
+        assert any(s.topics[0] == topic.slug for s in enabled), f"topik tanpa sumber utama: {topic.slug}"
+
+
 def test_unknown_topic_is_rejected(tmp_path):
     bad = tmp_path / "s.yaml"
     bad.write_text(

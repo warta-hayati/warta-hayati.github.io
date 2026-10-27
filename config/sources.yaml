@@ -60,7 +60,9 @@ sources:
 
   # Media
   - {id: thefishsite, name: "The Fish Site (Asia)", url: "https://thefishsite.com/region/asia", tier: media, lang: en, topics: [perikanan-tawar, perikanan-laut]}
-  - {id: gsa, name: "Global Seafood Alliance", url: "https://www.globalseafood.org/", tier: lembaga, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  # Topik pertama menentukan seksi beranda. GSA memberitakan hasil laut dan budidaya,
+  # jadi dipakai sebagai sumber utama Perikanan Payau/Laut.
+  - {id: gsa, name: "Global Seafood Alliance", url: "https://www.globalseafood.org/", tier: lembaga, lang: en, topics: [perikanan-laut, perikanan-tawar]}
   - id: mongabay-asia
     name: "Mongabay (Asia)"
     url: "https://news.mongabay.com/"
@@ -73,7 +75,10 @@ sources:
   # Jurnal dan preprint
   - {id: agri-food-security, name: "Agriculture and Food Security", url: "https://agricultureandfoodsecurity.biomedcentral.com/", feed: "https://agricultureandfoodsecurity.biomedcentral.com/articles/most-recent/rss.xml", tier: jurnal, lang: en, topics: [pertanian]}
   - {id: exp-agriculture, name: "Experimental Agriculture", url: "https://www.cambridge.org/core/journals/experimental-agriculture", tier: jurnal, lang: en, topics: [pertanian, perkebunan]}
-  - {id: agroforestry-systems, name: "Agroforestry Systems", url: "https://link.springer.com/journal/10457", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=10457&channel-name=Agroforestry%20Systems", tier: jurnal, lang: en, topics: [kehutanan, perkebunan]}
+  # Kementan dan CIFOR-ICRAF mencantumkan perkebunan sebagai topik kedua, jadi
+  # Perkebunan belum punya sumber utama. Jurnal ini membahas agroforestri tanaman
+  # perkebunan, jadi dipindah ke depan.
+  - {id: agroforestry-systems, name: "Agroforestry Systems", url: "https://link.springer.com/journal/10457", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=10457&channel-name=Agroforestry%20Systems", tier: jurnal, lang: en, topics: [perkebunan, kehutanan]}
   - {id: mdpi-forests, name: "Forests (MDPI)", url: "https://www.mdpi.com/journal/forests", feed: "https://www.mdpi.com/rss/journal/forests", tier: jurnal, lang: en, topics: [kehutanan]}
   - {id: trees-forests-people, name: "Trees, Forests and People", url: "https://www.sciencedirect.com/journal/trees-forests-and-people", feed: "https://rss.sciencedirect.com/publication/science/2666-7193", tier: jurnal, lang: en, topics: [kehutanan]}
   - {id: reviews-aquaculture, name: "Reviews in Aquaculture", url: "https://onlinelibrary.wiley.com/journal/17535131", feed: "https://onlinelibrary.wiley.com/feed/17535131/most-recent", tier: jurnal, lang: en, topics: [perikanan-tawar, perikanan-laut]}
