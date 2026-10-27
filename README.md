@@ -123,11 +123,13 @@ Sumber yang *feed*-nya gagal dimuat tidak dinonaktifkan. Kegagalannya tampil di 
 
 ## Sumber awal dan celah cakupan
 
-Daftar awal memuat 34 sumber aktif yang berasal dari dua daftar bacaan terlampir, ditambah 10 kandidat yang menunggu penilaian redaksi.
+Daftar sumber memuat 43 sumber aktif dan 11 kandidat yang menunggu penilaian redaksi: 34 sumber awal dari dua daftar bacaan terlampir, ditambah 9 sumber pengganti hasil penelusuran 2026-10-27.
 
 ### Keadaan *feed* (diuji 2026-10-27)
 
-Semua alamat *feed* eksplisit dan penemuan otomatis sudah diuji dengan `wartahayati check`. Hasil build CI: **17 dari 34 sumber aktif gagal dimuat**, dan tidak satu pun karena kesalahan alamat yang bisa diperbaiki dari sisi proyek ini.
+Semua alamat *feed* eksplisit dan penemuan otomatis sudah diuji dengan `wartahayati check`. Hasil build CI terakhir sebelum penambahan sumber: **17 dari 34 sumber aktif gagal dimuat**, dan tidak satu pun karena kesalahan alamat yang bisa diperbaiki dari sisi proyek ini.
+
+Uji lokal setelah penambahan (2026-10-27) mencatat **20 gagal dari 43 sumber aktif**. Tiga di antaranya hanya menolak jaringan lokal (Reviews in Aquaculture, Journal of Applied Aquaculture, dan Experimental Agriculture), jadi tidak muncul di CI; sisanya sama dengan 17 kegagalan CI sebelumnya. Tidak satu pun dari sembilan sumber pengganti yang gagal.
 
 - **Tanpa RSS:** Kementan, KKP, BRIN (dua entri), JPHKA, FAO Asia-Pasifik, SEARCA, CIFOR-ICRAF, dan AgriRxiv. Halaman beritanya terbaca, tetapi tidak ada *feed* maupun petunjuk `rss`/`atom`. Menunggu pengambil halaman daftar berita.
 - **Penerbit menghentikan RSS:** Trees, Forests and People dan Aquacultural Engineering (404 dari `rss.sciencedirect.com`), serta Agriculture and Food Security (alamat BMC menyajikan HTML, bukan XML).
@@ -138,10 +140,41 @@ Semua alamat *feed* eksplisit dan penemuan otomatis sudah diuji dengan `wartahay
 
 Dua penerbit hanya menolak jaringan lokal dan berhasil di CI: Reviews in Aquaculture (Wiley) dan Journal of Applied Aquaculture (Taylor & Francis). Karena itu hasil `wartahayati check` dari jaringan lokal hanya untuk menapis; build CI yang menentukan. Pada uji lokal tercatat 20 kegagalan, tiga lebih banyak daripada CI.
 
+### Sumber pengganti yang ditambahkan (diuji 2026-10-27)
+
+Penelusuran pengganti menambahkan sembilan sumber aktif untuk topik yang cakupannya tipis. Setiap alamat di bawah sudah diuji dengan pengambil proyek ini dan menghasilkan entri pada 2026-10-27.
+
+| Sumber | Topik | Feed | Entri | Terbaru |
+|---|---|---|---|---|
+| Botanical Studies | Botani | `link.springer.com/search.rss?facet-journal-id=40529` | 20 | 2026-10-15 |
+| PhytoKeys | Botani | `phytokeys.pensoft.net/rss` | 100 | 2026-10-22 |
+| ZooKeys | Zoologi | `zookeys.pensoft.net/rss` | 100 | 2026-10-27 |
+| Journal of Threatened Taxa | Zoologi | `threatenedtaxa.org/index.php/JoTT/gateway/plugin/WebFeedGatewayPlugin/atom` | 30 | 2026-10-27 |
+| MycoKeys | Mikrobiologi | `mycokeys.pensoft.net/rss` | 100 | 2026-10-26 |
+| Indonesian Journal of Biotechnology | Mikrobiologi | `journal.ugm.ac.id/ijbiotech/gateway/plugin/WebFeedGatewayPlugin/atom` | 7 | 2026-09-30 |
+| iForest | Kehutanan | `iforest.sisef.org/users/?action=rssxml` | 1204 | 2026-09-12 |
+| Sugar Tech | Perkebunan | `link.springer.com/search.rss?facet-journal-id=12355` | 20 | 2026-10-23 |
+| Jurnal Agro Industri Perkebunan | Perkebunan | `jurnal.polinela.ac.id/index.php/AIP/gateway/plugin/WebFeedGatewayPlugin/atom` | 8 | 2026-07-30 |
+
+PhytoKeys, ZooKeys, MycoKeys, dan iForest berasal dari penerbit global, jadi keempatnya memakai penyaring kata kunci Asia sesuai kriteria 5. Pengukuran 2026-10-27 menunjukkan penyaring itu meloloskan 77 dari 100 entri (PhytoKeys), 69 dari 100 (ZooKeys), 89 dari 100 (MycoKeys), dan 193 dari 1204 (iForest), jadi kotaknya tetap terisi.
+
+Sugar Tech diterbitkan Springer dan memenuhi kriteria 3 lewat jalur penerbit ilmiah mapan meskipun tidak terdaftar di DOAJ. Jurnal Agro Industri Perkebunan terdaftar di DOAJ.
+
+Kandidat yang diuji dan tidak dimasukkan:
+
+- **Journal of Forestry Research:** feed Springer terbaca, tetapi 20 entri teratasnya semuanya terbit 2016.
+- **Jurnal Penelitian Kehutanan Wallacea:** 30 entri, terbaru 2025-12-30, di luar batas 90 hari.
+- **International Microbiology:** hanya 4 dari 20 entri lolos penyaring Asia.
+- **Journal of Rubber Research:** `facet-journal-id=42473` bukan jurnal itu; isi yang muncul meleset jauh dari topik.
+- **Feed tidak ditemukan:** Berita Biologi, Microbiology Indonesia, Treubia, Zoo Indonesia, Zootaxa, Jurnal Hutan Tropis, Jurnal Belantara, Sylva Lestari, dan Jurnal Ilmu Kehutanan.
+- **Domain mati:** `ejurnal.litbang.pertanian.go.id` tidak lagi melayani, sehingga Buletin Palma dan Jurnal Penelitian Tanaman Industri tidak bisa dipakai.
+- **Biodiversitas:** feed sempat terbaca (99 entri), tetapi berulang kali timeout dan jurnalnya tidak ditemukan di DOAJ. Dijadikan kandidat dengan `enabled: false`.
+
 **Celah cakupan yang diketahui:**
 
-- Perkebunan dilayani Kementan, CIFOR-ICRAF, dan Agroforestry Systems, sementara dua yang pertama tidak menyediakan RSS. Kandidat yang perlu ditelusuri: pusat penelitian kelapa sawit, karet, kopi, kakao, dan tebu di Indonesia.
-- Botani dan zoologi bersandar pada bioRxiv, jurnal MDPI yang memblokir bot, dan BRIN yang tidak punya RSS. Kandidat: kebun raya dan museum zoologi di kawasan Asia.
+- Perkebunan kini dilayani Agroforestry Systems, Sugar Tech, dan Jurnal Agro Industri Perkebunan, ditambah Kementan dan CIFOR-ICRAF yang belum menyediakan RSS. Tanaman industri Indonesia (sawit, karet, kopi, kakao, tebu) masih tipis karena domain `ejurnal.litbang.pertanian.go.id` mati; yang perlu ditelusuri adalah pusat penelitian di bawah Kementan lewat alamat baru.
+- Botani, zoologi, dan mikrobiologi kini dilayani Botanical Studies, PhytoKeys, ZooKeys, Journal of Threatened Taxa, MycoKeys, dan Indonesian Journal of Biotechnology, di samping bioRxiv dan MDPI yang memblokir bot. Kebun raya dan museum zoologi di Asia belum ditemukan aliran yang layak.
+- Kehutanan bertambah iForest. JPHKA belum terselesaikan dan jurnal kehutanan Indonesia lain belum punya feed yang hidup.
 - Kementerian Kehutanan RI memerlukan verifikasi domain resmi.
 - Sebagian besar situs kementerian tidak menyediakan RSS. Pengambil halaman daftar berita masih tahap rencana.
 
