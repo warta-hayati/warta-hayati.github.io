@@ -75,6 +75,8 @@ def render(cfg: Config, state: dict, out: Path = ROOT / "dist") -> None:
         candidates=[s for s in cfg.sources if not s.enabled],
     )
 
+    write("tentang/index.html", "tentang.html", "tentang/", root="../", current="tentang")
+
     shutil.copytree(ROOT / "static", out / "static")
     # Sebagian peramban, pembaca feed, dan layanan lain meminta /favicon.ico
     # langsung di akar situs, tanpa membaca tag <link rel="icon">.

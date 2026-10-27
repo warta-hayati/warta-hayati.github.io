@@ -32,7 +32,7 @@
 <header class="top">
 <div class="brand">
 <a href="{{ root or './' }}"><img class="logo" src="{{ root }}static/logo-warta-hayati-96.png" alt="" width="44" height="44"><span class="name">Warta Hayati</span></a>
-<p class="tag">Pertanian, perikanan, kehutanan, dan ilmu hayati dari sumber tepercaya di Asia</p>
+<p class="tag">Pertanian, perikanan, kehutanan, dan ilmu hayati dari sumber tepercaya di Asia · <a href="{{ root }}tentang/">Tentang situs ini &amp; kontak</a></p>
 </div>
 <input type="search" id="cari" aria-label="Cari judul" placeholder="Cari judul">
 <div class="lang" role="group" aria-label="Filter bahasa">
@@ -52,11 +52,9 @@
 <p id="tidak-ada" class="kosong" hidden>Tidak ada judul yang cocok. Ubah kata kunci atau pilih bahasa lain.</p>
 </main>
 <footer class="foot">
-Hanya judul dan tautan yang ditampilkan. Hak atas isi tetap pada sumber asli.
-{% if updated %}Diperbarui <time datetime="{{ updated }}">{{ updated[:10] }}</time>.{% endif %}
-<a href="{{ root }}status/">Status sumber</a> ·
-<a href="{{ root }}data.json">Data JSON</a> ·
-<a href="https://github.com/warta-hayati/warta-hayati.github.io">Kode sumber</a>
+<p class="kontak">Kontak: <a href="mailto:ekajogja@gmail.com">ekajogja@gmail.com</a> · <a href="https://ekajogja.com" target="_blank" rel="noopener noreferrer">ekajogja.com</a> · <a href="{{ root }}tentang/">Tentang situs ini</a></p>
+<p>Hanya judul dan tautan yang ditampilkan. Hak atas isi tetap pada sumber asli.{% if updated %} Diperbarui <time datetime="{{ updated }}">{{ updated[:10] }}</time>.{% endif %}</p>
+<p><a href="{{ root }}status/">Status sumber</a> · <a href="{{ root }}data.json">Data JSON</a> · <a href="https://github.com/warta-hayati/warta-hayati.github.io">Kode sumber di GitHub</a></p>
 </footer>
 </div>
 <script src="{{ root }}static/app.js" defer></script>

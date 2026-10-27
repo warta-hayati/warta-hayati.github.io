@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Tentang Situs Ini | Warta Hayati{% endblock %}
+{% block desc %}Penjelasan singkat Warta Hayati: apa yang ditampilkan, cara memakainya, siapa pengelolanya, dan cara menghubungi pengelola.{% endblock %}
+{% block main %}
+<article class="tentang">
+<h1 class="judul">Tentang situs ini</h1>
+<p class="lambang"><img src="{{ root }}static/logo-warta-hayati.png" alt="Logo Warta Hayati: daun, padi, dan ikan dalam lingkaran hijau" width="160" height="160"></p>
+
+<p><strong>Warta Hayati</strong> mengumpulkan judul terbaru seputar pertanian, perikanan,
+kehutanan, dan ilmu hayati dari sumber tepercaya di Asia: kementerian, lembaga riset,
+jurnal ilmiah, dan media. Setiap judul disertai tanggal dan tautan ke tulisan aslinya.</p>
+
+<p>Yang ditampilkan hanya judul, tanggal, dan tautan keluar. Isi lengkapnya tetap berada di
+situs penerbit aslinya, dan hak atas isi sepenuhnya milik mereka. Situs ini tidak menyalin
+artikel dan tidak memasang iklan maupun pelacak.</p>
+
+<h2>Cara memakainya</h2>
+<ul>
+<li><strong>Kotak cari</strong> di kanan atas menyaring judul yang sedang tampil. Ketik satu kata saja, misalnya <em>sawit</em> atau <em>karang</em>.</li>
+<li><strong>Tombol ID / EN</strong> menyaring menurut bahasa sumber berita.</li>
+<li><strong>Tab topik</strong> (Pertanian, Perkebunan, Perikanan Tawar, dan seterusnya) membuka halaman khusus topik itu. Setiap topik punya warna sendiri supaya mudah dikenali.</li>
+<li><strong>Halaman <a href="{{ root }}status/">Status sumber</a></strong> menjelaskan sumber mana yang sedang berhasil dimuat dan mana yang tidak. Bila sebuah kotak tidak muncul di beranda, biasanya sebabnya tercatat di sana.</li>
+</ul>
+
+<h2>Siapa yang mengelola</h2>
+<p>Warta Hayati dirawat oleh <strong>Eka Y Saputra</strong>. Situs ini bekerja otomatis: setiap
+tiga jam ia mengambil judul terbaru dari daftar sumber, lalu menyusun ulang halaman. Daftar
+sumber dan kode programnya terbuka untuk diperiksa siapa pun.</p>
+
+<h2>Menghubungi pengelola</h2>
+<p>Cara paling mudah adalah lewat surel. Tidak perlu punya akun apa pun, cukup klik salah satu
+tautan berikut:</p>
+<ul>
+<li>Pertanyaan atau koreksi umum: <a href="mailto:ekajogja@gmail.com">ekajogja@gmail.com</a></li>
+<li>Mengusulkan sumber baru: <a href="mailto:ekajogja@gmail.com?subject=Usulan%20sumber%20Warta%20Hayati">kirim surel berjudul "Usulan sumber Warta Hayati"</a> — cukup sebutkan nama situs dan alamatnya.</li>
+<li>Meminta sebuah sumber dikeluarkan: <a href="mailto:ekajogja@gmail.com?subject=Pencabutan%20sumber%20Warta%20Hayati">kirim surel berjudul "Pencabutan sumber Warta Hayati"</a> — permintaan dari penerbit diproses pada putaran berikutnya.</li>
+</ul>
+<p>Situs pribadi pengelola: <a href="https://ekajogja.com" target="_blank" rel="noopener noreferrer">ekajogja.com</a>.</p>
+
+<h2>Catatan teknis</h2>
+<p>Untuk pembaca yang terbiasa dengan data: seluruh isi halaman tersedia dalam satu berkas
+<a href="{{ root }}data.json">data.json</a>. Daftar sumbernya ada di
+<a href="https://github.com/warta-hayati/warta-hayati.github.io/blob/main/config/sources.yaml">config/sources.yaml</a>,
+kode programnya berlisensi MIT, dan usulan perubahan bisa dikirim lewat
+<a href="https://github.com/warta-hayati/warta-hayati.github.io">GitHub</a>. Halaman yang Anda
+baca ini hanya berkas statis: tanpa kuki, tanpa pelacak, dan tanpa JavaScript pihak ketiga.</p>
+</article>
+{% endblock %}

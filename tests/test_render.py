@@ -113,3 +113,27 @@ def test_stylesheet_has_mobile_rules(tmp_path):
     assert "min-height:44px" in css
     assert "scroll-snap-type:x proximity" in css
     assert "attr(data-label)" in css
+
+
+def test_about_page_and_contact_reachable(tmp_path):
+    cfg = load()
+    render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
+    out = tmp_path / "out"
+    tentang = (out / "tentang" / "index.html").read_text(encoding="utf-8")
+    assert "mailto:ekajogja@gmail.com" in tentang
+    assert "https://ekajogja.com" in tentang
+    assert 'src="../static/logo-warta-hayati.png"' in tentang
+    assert 'href="../data.json"' in tentang
+    assert 'src="../static/logo-warta-hayati-96.png"' in tentang, "logo kepala halaman hilang"
+
+    halaman = {
+        "index.html": "tentang/",
+        "status/index.html": "../tentang/",
+        f"topik/{cfg.topics[0].slug}/index.html": "../../tentang/",
+        "tentang/index.html": "../tentang/",
+    }
+    for rel, tautan in halaman.items():
+        html = (out / rel).read_text(encoding="utf-8")
+        assert "mailto:ekajogja@gmail.com" in html, f"surel kontak hilang di {rel}"
+        assert "ekajogja.com" in html, f"alamat situs pribadi hilang di {rel}"
+        assert f'href="{tautan}"' in html, f"tautan Tentang hilang di {rel}"
