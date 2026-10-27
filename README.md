@@ -105,7 +105,7 @@ Setiap sumber berupa satu entri di `config/sources.yaml`:
 
 Topik pertama pada `topics` menentukan tempat sumber tampil di beranda. Halaman topik menampilkan semua sumber yang memuat topik tersebut. Sumber yang melayani beberapa topik dan memerlukan penyaring berbeda per topik didaftarkan sebagai beberapa entri dengan `url` sama. Pengambil hanya mengunduh satu kali per alamat.
 
-Setelah mengubah daftar, jalankan `wartahayati check` dan baca keluarannya. Pengujian `pytest` ikut memvalidasi struktur berkas dan memastikan setiap topik punya sumber aktif.
+Setelah mengubah daftar, jalankan `wartahayati check` dan baca keluarannya. Pengujian `pytest` ikut memvalidasi struktur berkas, memastikan setiap topik punya sumber utama, dan memastikan setiap sumber nonaktif membawa `note`.
 
 ### Kriteria masuk sumber
 
@@ -119,16 +119,29 @@ Setelah mengubah daftar, jalankan `wartahayati check` dan baca keluarannya. Peng
 
 Sumber yang belum memenuhi kriteria diberi `enabled: false` beserta `note`. Alasannya tampil di halaman status.
 
+Sumber yang *feed*-nya gagal dimuat tidak dinonaktifkan. Kegagalannya tampil di halaman status, judul lama tetap terisi sampai *feed*-nya pulih, dan sumber itu kembali menyumbang judul begitu penerbit memperbaikinya.
+
 ## Sumber awal dan celah cakupan
 
 Daftar awal memuat 34 sumber aktif yang berasal dari dua daftar bacaan terlampir, ditambah 10 kandidat yang menunggu penilaian redaksi.
 
-**Alamat *feed* belum diverifikasi.** Entri dengan `feed` eksplisit memakai pola URL dari masing-masing penerbit (MDPI, Wiley, Springer, ScienceDirect, Taylor & Francis, bioRxiv, BMC). Entri `feed: auto` bergantung pada penemuan otomatis. Jalankan `wartahayati check` dari jaringan yang terbuka sebelum penerbitan pertama, lalu perbaiki alamat yang gagal.
+### Keadaan *feed* (diuji 2026-10-27)
+
+Semua alamat *feed* eksplisit dan penemuan otomatis sudah diuji dengan `wartahayati check`. Hasil build CI: **17 dari 34 sumber aktif gagal dimuat**, dan tidak satu pun karena kesalahan alamat yang bisa diperbaiki dari sisi proyek ini.
+
+- **Tanpa RSS:** Kementan, KKP, BRIN (dua entri), JPHKA, FAO Asia-Pasifik, SEARCA, CIFOR-ICRAF, dan AgriRxiv. Halaman beritanya terbaca, tetapi tidak ada *feed* maupun petunjuk `rss`/`atom`. Menunggu pengambil halaman daftar berita.
+- **Penerbit menghentikan RSS:** Trees, Forests and People dan Aquacultural Engineering (404 dari `rss.sciencedirect.com`), serta Agriculture and Food Security (alamat BMC menyajikan HTML, bukan XML).
+- **Menolak bot dengan 403:** Forests, Plants, Diversity, dan Microorganisms (MDPI). Ini blokir akses, bukan *feed* yang hilang.
+- **Aquaculture Research:** 404 pada kedua ISSN, cetak `1355557x` dan daring `13652109`. Tidak ada alamat pengganti yang ditemukan.
+- **Domain berpindah:** JPHKA. `ejournal.forda-mof.org` dialihkan ke halaman lain, jadi jurnal tidak lagi terbit di alamat itu.
+- **Diperbaiki:** SEAFDEC/AQD. Repositori `repository.seafdec.org.ph` menjawab 503, dialihkan ke `https://www.seafdec.org.ph/feed/` (20 entri, berhasil di CI).
+
+Dua penerbit hanya menolak jaringan lokal dan berhasil di CI: Reviews in Aquaculture (Wiley) dan Journal of Applied Aquaculture (Taylor & Francis). Karena itu hasil `wartahayati check` dari jaringan lokal hanya untuk menapis; build CI yang menentukan. Pada uji lokal tercatat 20 kegagalan, tiga lebih banyak daripada CI.
 
 **Celah cakupan yang diketahui:**
 
-- Perkebunan hanya dilayani Kementan, CIFOR-ICRAF, dan dua jurnal. Kandidat yang perlu ditelusuri: pusat penelitian kelapa sawit, karet, kopi, kakao, dan tebu di Indonesia.
-- Botani dan zoologi bergantung pada *preprint*, jurnal MDPI, dan BRIN. Kandidat: kebun raya dan museum zoologi di kawasan Asia.
+- Perkebunan dilayani Kementan, CIFOR-ICRAF, dan Agroforestry Systems, sementara dua yang pertama tidak menyediakan RSS. Kandidat yang perlu ditelusuri: pusat penelitian kelapa sawit, karet, kopi, kakao, dan tebu di Indonesia.
+- Botani dan zoologi bersandar pada bioRxiv, jurnal MDPI yang memblokir bot, dan BRIN yang tidak punya RSS. Kandidat: kebun raya dan museum zoologi di kawasan Asia.
 - Kementerian Kehutanan RI memerlukan verifikasi domain resmi.
 - Sebagian besar situs kementerian tidak menyediakan RSS. Pengambil halaman daftar berita masih tahap rencana.
 
