@@ -4,6 +4,7 @@ Situs agregator berita dan artikel bidang pertanian, perikanan, kehutanan, dan i
 
 Situs: <https://warta-hayati.github.io>
 Repositori: <https://github.com/warta-hayati/warta-hayati.github.io>
+Pengelola: Eka Y Saputra — <ekajogja@gmail.com> · <https://ekajogja.com>
 
 ## Tujuan
 
@@ -31,6 +32,8 @@ Tata letaknya mengikuti gaya Techurls: satu kotak per sumber, berisi enam judul 
 Warna topik didefinisikan di `static/style.css` sebagai empat variabel per topik: `--t` untuk garis, titik, dan pita, `--t-ink` untuk teks berwarna (judul seksi), `--t-solid` untuk latar berisi dengan teks putih (tab topik yang sedang aktif dan lencana tingkat), serta `--t-bg` untuk tint kepala kotak. Pemetaannya memakai atribut `data-topik` pada seksi topik, tab navigasi, dan pita tepi atas. Topik yang belum punya aturan warna otomatis memakai aksen hijau bawaan, jadi menambah topik di `config/sources.yaml` tidak pernah merusak tampilan.
 
 Rasio kontras sudah diperiksa: `--t-ink` pada tint dan pada kartu minimal 4,5:1, `--t` pada latar minimal 3:1, dan teks putih di atas `--t-solid` minimal 4,75:1. Karena itu warna aksen yang terang seperti hijau muda tidak dipakai sebagai latar berteks putih: pada `#6E9427` teks putih hanya mencapai 3,54:1.
+
+Tata letak memakai tiga titik henti di `static/style.css`: `max-width:640px` untuk tata letak ponsel (padding, ukuran judul, tabel status menjadi kartu), `max-width:900px` untuk tab topik yang dibungkus ke beberapa baris tanpa geser mendatar, dan `pointer:coarse` untuk target sentuh minimal 44px di perangkat sentuh.
 
 Halaman `tentang/` menjelaskan situs ini untuk pembaca awam dan memuat jalur kontak. Pengelola: Eka Y Saputra — <ekajogja@gmail.com>, <https://ekajogja.com>.
 
@@ -65,7 +68,7 @@ warta-hayati/
 │   ├── normalize.py           pembersihan, penyaring, penggabungan
 │   ├── render.py              pembangun situs statis
 │   └── cli.py                 perintah build, fetch, render, check
-├── templates/                 templat Jinja2
+├── templates/                 templat Jinja2 (beranda, topik, status, tentang)
 ├── static/                    style.css (termasuk palet warna topik), app.js, logo, dan ikon situs
 ├── tests/                     pengujian pytest
 ├── .github/workflows/build.yml
@@ -88,6 +91,8 @@ python -m http.server -d dist 8000
 ```
 
 Buka <http://localhost:8000>.
+
+Untuk memeriksa tampilan ponsel, biarkan peladen itu berjalan lalu buka `http://<IP-lokal-komputer>:8000` dari ponsel di jaringan Wi-Fi yang sama. Alamat IP komputer bisa dilihat dengan `hostname -I`.
 
 | Perintah | Fungsi |
 |---|---|
@@ -162,7 +167,7 @@ Daftar sumber memuat 44 sumber aktif dan 10 kandidat yang menunggu penilaian red
 
 Semua alamat *feed* eksplisit dan penemuan otomatis sudah diuji dengan `wartahayati check`. Hasil build CI terakhir sebelum penambahan sumber: **17 dari 34 sumber aktif gagal dimuat**, dan tidak satu pun karena kesalahan alamat yang bisa diperbaiki dari sisi proyek ini.
 
-Uji lokal terakhir (2026-10-27) mencatat **17 gagal dari 44 sumber aktif**. Tiga di antaranya hanya menolak jaringan lokal (Reviews in Aquaculture, Journal of Applied Aquaculture, dan Experimental Agriculture), jadi di CI tersisa **14 kegagalan**. Tidak satu pun dari sembilan sumber pengganti yang gagal, dan tidak satu pun dari empat sumber yang dibaca dari halaman daftar berita.
+Uji lokal terakhir (2026-10-27) mencatat **17 gagal dari 44 sumber aktif**. Tiga di antaranya hanya menolak jaringan lokal (Reviews in Aquaculture, Journal of Applied Aquaculture, dan Experimental Agriculture), jadi di CI tersisa **14 kegagalan**. Angka itu terbukti tepat: build CI 16:21 UTC (run 40539995820) melaporkan **14 gagal dan 30 berhasil dari 44 sumber**, dan halaman status situs tayang menampilkan angka yang sama. Tidak satu pun dari sembilan sumber pengganti yang gagal, dan tidak satu pun dari empat sumber yang dibaca dari halaman daftar berita.
 
 - **Tanpa RSS, dibaca dari halaman daftar:** Kementan (35 butir), FAO Asia-Pasifik (20), Kementerian Kehutanan (12), dan KKP (4). Halaman ini tidak menerbitkan *feed*, jadi dibaca memakai aturan `list`.
 - **Tanpa RSS, belum terselesaikan:** BRIN (dua entri), SEARCA, CIFOR-ICRAF, dan AgriRxiv. Halaman beritanya dibuat JavaScript sehingga judulnya tidak ada di HTML mentah, tidak ada endpoint JSON (`/wp-json`, `/jsonapi`), dan jalur `/feed/` maupun `/rss.xml` alternatif sudah dicoba tanpa hasil.
@@ -172,7 +177,7 @@ Uji lokal terakhir (2026-10-27) mencatat **17 gagal dari 44 sumber aktif**. Tiga
 - **Domain hilang:** JPHKA. Pada 2026-10-27 `ejournal.forda-mof.org` dialihkan ke domain parkir `tokenomica.com`, subdomain `jphka`, `ojs`, dan `publikasi` menjawab HTTP 530, dan `www.forda-mof.org` hanya menyisakan halaman 752 bita. Alamat baru tidak ditemukan, jadi entri JPHKA dibiarkan apa adanya sampai *feed*-nya pulih; cakupan kehutanan ditopang iForest dan Mongabay.
 - **Diperbaiki:** SEAFDEC/AQD. Repositori `repository.seafdec.org.ph` menjawab 503, dialihkan ke `https://www.seafdec.org.ph/feed/` (20 entri, berhasil di CI).
 
-Dua penerbit hanya menolak jaringan lokal dan berhasil di CI: Reviews in Aquaculture (Wiley) dan Journal of Applied Aquaculture (Taylor & Francis). Karena itu hasil `wartahayati check` dari jaringan lokal hanya untuk menapis; build CI yang menentukan. Pada uji lokal tercatat 20 kegagalan, tiga lebih banyak daripada CI.
+Dua penerbit hanya menolak jaringan lokal dan berhasil di CI: Reviews in Aquaculture (Wiley) dan Journal of Applied Aquaculture (Taylor & Francis). Karena itu hasil `wartahayati check` dari jaringan lokal hanya untuk menapis; build CI yang menentukan. Pada uji lokal tercatat 17 kegagalan dari 44 sumber, tiga lebih banyak daripada CI.
 
 ### Sumber pengganti yang ditambahkan (diuji 2026-10-27)
 
@@ -229,6 +234,7 @@ Kandidat yang diuji dan tidak dimasukkan:
 2. Buka **Settings > Pages**, lalu pilih **Build and deployment > Source: GitHub Actions**.
 3. Jalankan *workflow* **Bangun dan terbitkan** sekali secara manual dari tab Actions.
 4. Situs terbit di <https://warta-hayati.github.io/>. Seluruh tautan internal memakai alamat relatif, jadi situs juga berjalan di domain sendiri atau di subfolder.
+5. Setelah setiap dorongan ke `main`, *workflow* menjalankan pengujian lalu membangun ulang situs; prosesnya sekitar tiga sampai empat menit. Bukti bahwa versi baru sudah tayang: kolom `updated` pada `data.json` berubah, dan halaman `status/` menampilkan jumlah Berhasil serta Gagal yang sama dengan hasil *workflow*.
 
 *Workflow* berjalan setiap 3 jam. Riwayat judul disimpan lewat `actions/cache`. Bila cache terhapus, kotak terisi ulang dari *feed* terbaru pada putaran berikutnya.
 
@@ -240,7 +246,9 @@ GitHub menonaktifkan *workflow* terjadwal pada repositori publik setelah 60 hari
 pytest -q
 ```
 
-Pengujian mencakup pembersihan teks, penyaringan tautan tidak aman, deduplikasi, validasi konfigurasi, dan pembangunan semua halaman dengan data kosong.
+Pengujian mencakup pembersihan teks, penyaringan tautan tidak aman, deduplikasi, validasi konfigurasi, pembacaan halaman daftar berita dari fixture HTML asli, serta pembangunan semua halaman dengan data kosong.
+
+Beberapa pengujian menjaga hal yang mudah rusak tanpa terlihat: setiap topik punya aturan warna dan atribut `data-topik` di seksi maupun tab, stylesheet masih memuat aturan ponsel dan rasio kontrasnya, setiap sel tabel status punya `data-label` untuk tampilan kartu, logo serta halaman `tentang/` ikut dibangun, dan jalur kontak tidak muncul lagi di beranda, halaman topik, maupun halaman status.
 
 ## Hak cipta dan etika pengambilan data
 
@@ -257,7 +265,8 @@ Pengujian mencakup pembersihan teks, penyaringan tautan tidak aman, deduplikasi,
 - Peramban tanpa antarmuka opsional untuk situs berita ber-JavaScript (BRIN, SEARCA, CIFOR-ICRAF, AgriRxiv) — hanya bila dependensi tambahan disetujui.
 - Terjemahan judul otomatis dari Inggris ke Indonesia.
 - Penyaring Asia otomatis untuk sumber global.
-- Mode gelap dan *self-hosting* huruf untuk menghilangkan ketergantungan pada Google Fonts. Warna topik sudah berupa variabel CSS (`--t`, `--t-ink`, `--t-bg`), jadi mode gelap tinggal menimpa ketiganya.
+- Mode gelap dan *self-hosting* huruf untuk menghilangkan ketergantungan pada Google Fonts. Warna topik sudah berupa variabel CSS (`--t`, `--t-ink`, `--t-solid`, `--t-bg`), jadi mode gelap tinggal menimpa keempatnya.
+- Pemilih topik satu baris untuk ponsel, bila daftar tab yang dibungkus dirasa terlalu tinggi.
 
 ## Kontribusi
 
