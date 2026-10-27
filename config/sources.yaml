@@ -145,7 +145,7 @@ sources:
   - {id: j-agro-industri-perkebunan, name: "Jurnal Agro Industri Perkebunan", url: "https://jurnal.polinela.ac.id/index.php/AIP", feed: "https://jurnal.polinela.ac.id/index.php/AIP/gateway/plugin/WebFeedGatewayPlugin/atom", tier: jurnal, lang: id, topics: [perkebunan]}
 
   # Kandidat yang belum aktif
-  - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.menlhk.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Verifikasi domain resmi setelah kementerian kehutanan dipisah dari KLHK."}
+  - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.kehutanan.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Domain resmi sudah terverifikasi 2026-10-27 (judul halaman: Kementerian Kehutanan), tetapi situsnya belum menyediakan RSS. Menunggu pengambil halaman daftar berita."}
   - {id: bps, name: "Badan Pusat Statistik", url: "https://www.bps.go.id/", tier: pemerintah, lang: id, topics: [pertanian], enabled: false, note: "Berupa rilis statistik berkala. Cocok sebagai modul data berkala."}
   - {id: seafoodsource, name: "SeafoodSource (Akuakultur)", url: "https://www.seafoodsource.com/news/aquaculture", tier: media, lang: en, topics: [perikanan-laut], enabled: false, note: "Media dagang komersial dengan sebagian artikel berbayar. Perlu penilaian redaksi dan penyaring Asia."}
   - {id: undercurrent, name: "Undercurrent News", url: "https://www.undercurrentnews.com/", tier: media, lang: en, topics: [perikanan-laut], enabled: false, note: "Langganan berbayar, judul terbatas."}
