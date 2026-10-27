@@ -20,8 +20,17 @@ Tata letaknya mengikuti gaya Techurls: satu kotak per sumber, berisi enam judul 
 - Riwayat judul per sumber, sehingga kotak tetap terisi ketika *feed* sedang kosong atau gagal.
 - Kotak tanpa judul disembunyikan dari beranda dan halaman topik. Keadaan setiap sumber tampil di halaman `status/`.
 - Halaman `status/` yang menampilkan sumber gagal, alasan galat, dan daftar kandidat yang belum aktif.
+- Aksen warna per topik: garis judul, kepala kotak, tab, dan pita di tepi atas halaman memakai warna topik masing-masing (Pertanian hijau muda, Perkebunan hijau tua, Perikanan Tawar biru muda, Perikanan Payau/Laut biru tua, dan seterusnya), sehingga seksi mudah dikenali saat halaman digulir.
+- Tampilan ponsel: tab topik lengket dan bisa digeser dengan *snap*, target sentuh minimal 44px, dan tabel status berubah menjadi kartu sehingga tidak ada gulir mendatar.
+- Logo di kepala halaman, serta halaman `tentang/` berbahasa awam yang memuat cara pakai dan jalur kontak (surel pengelola dan situs pribadinya) untuk pembaca yang tidak memakai GitHub.
 - Ekspor `data.json` untuk dipakai ulang oleh peneliti dan pengembang lain.
 - Situs statis tanpa basis data. Biaya hosting nol di GitHub Pages.
+
+## Tampilan
+
+Warna topik didefinisikan di `static/style.css` sebagai tiga variabel per topik: `--t` untuk garis dan titik, `--t-ink` untuk teks dan lencana, `--t-bg` untuk tint kepala kotak. Pemetaannya memakai atribut `data-topik` pada seksi topik, tab navigasi, dan pita tepi atas. Topik yang belum punya aturan warna otomatis memakai aksen hijau bawaan, jadi menambah topik di `config/sources.yaml` tidak pernah merusak tampilan. Rasio kontras setiap pasangan warna minimal 4,5:1 untuk teks dan 3:1 untuk garis.
+
+Halaman `tentang/` menjelaskan situs ini untuk pembaca awam dan memuat jalur kontak. Pengelola: Eka Y Saputra — <ekajogja@gmail.com>, <https://ekajogja.com>.
 
 ## Cara kerja
 
@@ -39,7 +48,7 @@ flowchart LR
 1. `config/sources.yaml` mendaftar sumber, topik, bahasa, tingkat, dan penyaring kata kunci.
 2. Pengambil memuat semua *feed* secara paralel. Sumber dengan `feed: auto` dicari lewat tag `<link rel="alternate">` dan jalur umum seperti `/feed/` dan `/rss.xml`. Sumber tanpa RSS memakai aturan `list` untuk membaca daftar berita dari halaman biasa.
 3. Normalisasi membersihkan HTML dari judul, membuang parameter pelacak (`utm_*`, `fbclid`), menolak tautan selain http(s), lalu membuang duplikat berdasarkan URL dan judul.
-4. Generator menulis `index.html`, satu halaman per topik, `status/`, dan `data.json`.
+4. Generator menulis `index.html`, satu halaman per topik, `status/`, `tentang/`, dan `data.json`.
 5. Hanya judul, tanggal, dan tautan keluar yang disimpan. Isi artikel tidak disalin.
 
 ## Struktur repositori
@@ -55,7 +64,7 @@ warta-hayati/
 │   ├── render.py              pembangun situs statis
 │   └── cli.py                 perintah build, fetch, render, check
 ├── templates/                 templat Jinja2
-├── static/                    style.css, app.js, dan berkas ikon situs
+├── static/                    style.css (termasuk palet warna topik), app.js, logo, dan ikon situs
 ├── tests/                     pengujian pytest
 ├── .github/workflows/build.yml
 └── data/                      state.json dibuat saat dijalankan (tidak masuk Git)
@@ -246,8 +255,10 @@ Pengujian mencakup pembersihan teks, penyaringan tautan tidak aman, deduplikasi,
 - Peramban tanpa antarmuka opsional untuk situs berita ber-JavaScript (BRIN, SEARCA, CIFOR-ICRAF, AgriRxiv) — hanya bila dependensi tambahan disetujui.
 - Terjemahan judul otomatis dari Inggris ke Indonesia.
 - Penyaring Asia otomatis untuk sumber global.
-- Mode gelap dan *self-hosting* huruf untuk menghilangkan ketergantungan pada Google Fonts.
+- Mode gelap dan *self-hosting* huruf untuk menghilangkan ketergantungan pada Google Fonts. Warna topik sudah berupa variabel CSS (`--t`, `--t-ink`, `--t-bg`), jadi mode gelap tinggal menimpa ketiganya.
 
 ## Kontribusi
 
 Usulan sumber baru diajukan lewat *issue* atau *pull request* yang mengubah `config/sources.yaml`. Sertakan alamat *feed* bila ada, tingkat sumber, dan bukti bahwa kriteria masuk terpenuhi.
+
+Bagi yang tidak memakai GitHub, usulan dan koreksi bisa dikirim lewat surel ke <ekajogja@gmail.com>, atau lewat halaman `tentang/` di situs yang menyediakan tautan surel siap klik.
