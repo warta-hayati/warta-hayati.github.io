@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Warta Hayati: Berita Pertanian, Perikanan, dan Kehutanan Asia{% endblock %}</title>
+<meta name="description" content="{% block desc %}Judul terbaru pertanian, perikanan, kehutanan, botani, zoologi, dan mikrobiologi dari lembaga, jurnal, dan media tepercaya di Asia.{% endblock %}">
+<link rel="canonical" href="https://warta-hayati.github.io/{{ path }}">
+<meta property="og:site_name" content="Warta Hayati">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="{{ self.title() }}">
+<meta property="og:description" content="{{ self.desc() }}">
+<meta property="og:url" content="https://warta-hayati.github.io/{{ path }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:wght@600&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="{{ root }}static/style.css">
+{% block head %}{% endblock %}
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi</a>
+<div class="wrap">
+<header class="top">
+<div class="brand">
+<a href="{{ root or './' }}"><span class="name">Warta Hayati</span></a>
+<p class="tag">Pertanian, perikanan, kehutanan, dan ilmu hayati dari sumber tepercaya di Asia</p>
+</div>
+<input type="search" id="cari" aria-label="Cari judul" placeholder="Cari judul">
+<div class="lang" role="group" aria-label="Filter bahasa">
+<button type="button" data-lang="all" aria-pressed="true">Semua</button>
+<button type="button" data-lang="id" aria-pressed="false">ID</button>
+<button type="button" data-lang="en" aria-pressed="false">EN</button>
+</div>
+</header>
+<nav class="topik-nav" aria-label="Topik">
+<a href="{{ root or './' }}"{% if current is none %} aria-current="page"{% endif %}>Semua</a>
+{% for t in topics %}
+<a href="{{ root }}topik/{{ t.slug }}/"{% if current == t.slug %} aria-current="page"{% endif %}>{{ t.name }}</a>
+{% endfor %}
+</nav>
+<main id="isi">
+{% block main %}{% endblock %}
+<p id="tidak-ada" class="kosong" hidden>Tidak ada judul yang cocok. Ubah kata kunci atau pilih bahasa lain.</p>
+</main>
+<footer class="foot">
+Hanya judul dan tautan yang ditampilkan. Hak atas isi tetap pada sumber asli.
+{% if updated %}Diperbarui <time datetime="{{ updated }}">{{ updated[:10] }}</time>.{% endif %}
+<a href="{{ root }}status/">Status sumber</a> ·
+<a href="{{ root }}data.json">Data JSON</a> ·
+<a href="https://github.com/warta-hayati/warta-hayati.github.io">Kode sumber</a>
+</footer>
+</div>
+<script src="{{ root }}static/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_box.html" import box %}
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Warta Hayati",
+  "url": "https://warta-hayati.github.io/",
+  "inLanguage": "id",
+  "description": "Agregator judul berita dan artikel pertanian, perikanan, kehutanan, dan ilmu hayati dari sumber tepercaya di Asia."
+}
+</script>
+{% endblock %}
+{% block main %}
+{% for topic, boxes in sections %}
+<section class="topik">
+<h2 class="judul"><a href="{{ root }}topik/{{ topic.slug }}/">{{ topic.name }}</a></h2>
+<div class="grid">
+{% for b in boxes %}{{ box(b, tiers) }}{% endfor %}
+</div>
+</section>
+{% endfor %}
+{% endblock %}

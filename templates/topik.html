@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "_box.html" import box %}
+{% block title %}Berita {{ topic.name }} Terbaru | Warta Hayati{% endblock %}
+{% block desc %}Judul terbaru {{ topic.name|lower }} dari sumber tepercaya di Asia: lembaga pemerintah, lembaga riset, jurnal, dan media.{% endblock %}
+{% block main %}
+<section class="topik">
+<h1 class="judul">{{ topic.name }}</h1>
+<div class="grid">
+{% for b in boxes %}{{ box(b, tiers) }}{% endfor %}
+</div>
+</section>
+{% endblock %}

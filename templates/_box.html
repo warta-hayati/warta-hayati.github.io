@@ -1,0 +1,22 @@
+{% macro box(b, tiers) %}
+{% set tier = tiers[b.source.tier] %}
+<section class="box" data-lang="{{ b.source.lang }}">
+<header>
+<strong><a href="{{ b.source.url }}" target="_blank" rel="noopener noreferrer">{{ b.source.name }}</a></strong>
+<span class="tier">{{ tier.label }}</span>
+<span class="bhs">{{ b.source.lang|upper }}</span>
+</header>
+{% if b['items'] %}
+<ul>
+{% for it in b['items'] %}
+<li><a href="{{ it.link }}" target="_blank" rel="noopener noreferrer">{{ it.title }}</a><time datetime="{{ it.published }}">{{ it.published[:10] }}</time></li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="kosong">Belum ada judul yang termuat dari sumber ini.</p>
+{% endif %}
+{% if tier.note %}
+<p class="catatan">{{ tier.note }}</p>
+{% endif %}
+</section>
+{% endmacro %}

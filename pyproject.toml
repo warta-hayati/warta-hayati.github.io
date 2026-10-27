@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wartahayati"
+version = "0.1.0"
+description = "Agregator berita dan artikel pertanian, perikanan, kehutanan, dan ilmu hayati dari sumber tepercaya di Asia"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "feedparser>=6.0",
+    "requests>=2.31",
+    "Jinja2>=3.1",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+wartahayati = "wartahayati.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

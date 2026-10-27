@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Status Sumber | Warta Hayati{% endblock %}
+{% block main %}
+<h1 class="judul">Status sumber</h1>
+<p class="kosong">Sumber yang gagal dimuat tampil paling atas. Judul lama tetap ditampilkan di beranda sampai sumber pulih.</p>
+<div class="tabel">
+<table>
+<thead><tr><th>Sumber</th><th>Tingkat</th><th>Status</th><th>Terakhir berhasil</th><th>Judul</th><th>Feed atau galat</th></tr></thead>
+<tbody>
+{% for r in rows %}
+<tr>
+<td><a href="{{ r.source.url }}" target="_blank" rel="noopener noreferrer">{{ r.source.name }}</a></td>
+<td>{{ tiers[r.source.tier].label }}</td>
+<td>{% if r.health.ok %}<span class="ok">Berhasil</span>{% elif r.health.checked %}<span class="gagal">Gagal</span>{% else %}Belum diperiksa{% endif %}</td>
+<td>{% if r.health.last_ok %}<time datetime="{{ r.health.last_ok }}">{{ r.health.last_ok[:10] }}</time>{% else %}Belum pernah{% endif %}</td>
+<td>{{ r.health.kept if r.health.kept is not none else 0 }}</td>
+<td>{% if r.health.ok %}{{ r.health.feed }}{% else %}{{ r.health.error or '' }}{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% if candidates %}
+<h2 class="judul">Kandidat yang belum aktif</h2>
+<div class="tabel">
+<table>
+<thead><tr><th>Sumber</th><th>Tingkat</th><th>Alasan belum aktif</th></tr></thead>
+<tbody>
+{% for s in candidates %}
+<tr><td><a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.name }}</a></td><td>{{ tiers[s.tier].label }}</td><td>{{ s.note }}</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

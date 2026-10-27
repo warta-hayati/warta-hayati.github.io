@@ -1,0 +1,102 @@
+# Daftar sumber Warta Hayati.
+# feed: auto  -> feed dicari otomatis dari halaman 'url' lalu disimpan.
+# feed: URL   -> pola URL feed yang diketahui. Semua URL feed eksplisit di bawah belum
+#                diverifikasi. Jalankan `wartahayati check` dan baca halaman status.
+# include     -> penyaring kata kunci (judul dan ringkasan, tanpa membedakan huruf besar kecil).
+# topics      -> topik pertama menentukan tempat sumber tampil di beranda.
+# enabled: false + note -> kandidat yang menunggu penilaian redaksi.
+
+defaults:
+  max_items: 6
+
+tiers:
+  pemerintah: {label: Pemerintah}
+  lembaga: {label: Lembaga}
+  riset: {label: Riset}
+  jurnal: {label: Jurnal}
+  preprint: {label: Preprint, note: "Belum melewati telaah sejawat. Perlakukan sebagai petunjuk awal."}
+  media: {label: Media}
+
+topics:
+  - {slug: pertanian, name: Pertanian}
+  - {slug: perkebunan, name: Perkebunan}
+  - {slug: perikanan-tawar, name: Perikanan Tawar}
+  - {slug: perikanan-laut, name: "Perikanan Payau/Laut"}
+  - {slug: kehutanan, name: Kehutanan}
+  - {slug: botani, name: Botani}
+  - {slug: zoologi, name: Zoologi}
+  - {slug: mikrobiologi, name: Mikrobiologi}
+
+sources:
+  # Indonesia
+  - {id: kementan, name: "Kementerian Pertanian RI", url: "https://www.pertanian.go.id/", tier: pemerintah, lang: id, topics: [pertanian, perkebunan]}
+  - {id: kkp, name: "Kementerian Kelautan dan Perikanan RI", url: "https://kkp.go.id/", tier: pemerintah, lang: id, topics: [perikanan-tawar, perikanan-laut]}
+  - id: brin-agro
+    name: "BRIN (Pertanian dan Perikanan)"
+    url: "https://www.brin.go.id/"
+    tier: riset
+    lang: id
+    topics: [pertanian, perikanan-tawar, perikanan-laut, kehutanan]
+    include: [pertanian, perikanan, akuakultur, budidaya, hutan, pangan, tanaman, padi, nelayan, agro]
+  - id: brin-hayati
+    name: "BRIN (Ilmu Hayati)"
+    url: "https://www.brin.go.id/"
+    tier: riset
+    lang: id
+    topics: [botani, zoologi, mikrobiologi]
+    include: [mikroba, mikrobiologi, bakteri, jamur, fungi, tumbuhan, flora, fauna, satwa, herbarium, biodiversitas, keanekaragaman hayati, taksonomi]
+  - {id: mongabay-id, name: "Mongabay Indonesia", url: "https://www.mongabay.co.id/", feed: "https://www.mongabay.co.id/feed/", tier: media, lang: id, topics: [kehutanan, zoologi]}
+  - {id: jphka, name: "Jurnal Penelitian Hutan dan Konservasi Alam", url: "https://ejournal.forda-mof.org/ejournal-litbang/index.php/JPHKA", tier: jurnal, lang: id, topics: [kehutanan]}
+
+  # Lembaga dan riset Asia-Pasifik
+  - {id: fao-asia-pasifik, name: "FAO Asia dan Pasifik", url: "https://www.fao.org/asiapacific/news/", tier: lembaga, lang: en, topics: [pertanian, perikanan-tawar, perikanan-laut, kehutanan]}
+  - {id: cgiar-sea, name: "CGIAR Asia Tenggara dan Pasifik", url: "https://www.cgiar.org/cgiar-regions/southeast-asia-and-pacific/", tier: riset, lang: en, topics: [pertanian, perikanan-tawar]}
+  - {id: irri-rice-today, name: "Rice Today (IRRI)", url: "https://ricetoday.irri.org/", tier: riset, lang: en, topics: [pertanian]}
+  - {id: searca, name: "SEARCA", url: "https://www.searca.org/", tier: riset, lang: en, topics: [pertanian]}
+  - {id: worldfish, name: "WorldFish", url: "https://www.worldfishcenter.org/", tier: riset, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: naca, name: "NACA", url: "https://enaca.org/", tier: riset, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: seafdec-aqd, name: "SEAFDEC/AQD", url: "https://repository.seafdec.org.ph/", tier: riset, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: cifor-icraf, name: "CIFOR-ICRAF (ASEAN)", url: "https://www.worldagroforestry.org/country/asean/news", tier: riset, lang: en, topics: [kehutanan, perkebunan]}
+
+  # Media
+  - {id: thefishsite, name: "The Fish Site (Asia)", url: "https://thefishsite.com/region/asia", tier: media, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: gsa, name: "Global Seafood Alliance", url: "https://www.globalseafood.org/", tier: lembaga, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - id: mongabay-asia
+    name: "Mongabay (Asia)"
+    url: "https://news.mongabay.com/"
+    feed: "https://news.mongabay.com/feed/"
+    tier: media
+    lang: en
+    topics: [kehutanan, zoologi]
+    include: [Indonesia, Asia, Malaysia, Thailand, Vietnam, Philippines, India, China, Myanmar, Cambodia, Laos, Borneo, Sumatra, Papua, Mekong, Bangladesh, Nepal, Sri Lanka, Japan, Korea, Timor]
+
+  # Jurnal dan preprint
+  - {id: agri-food-security, name: "Agriculture and Food Security", url: "https://agricultureandfoodsecurity.biomedcentral.com/", feed: "https://agricultureandfoodsecurity.biomedcentral.com/articles/most-recent/rss.xml", tier: jurnal, lang: en, topics: [pertanian]}
+  - {id: exp-agriculture, name: "Experimental Agriculture", url: "https://www.cambridge.org/core/journals/experimental-agriculture", tier: jurnal, lang: en, topics: [pertanian, perkebunan]}
+  - {id: agroforestry-systems, name: "Agroforestry Systems", url: "https://link.springer.com/journal/10457", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=10457&channel-name=Agroforestry%20Systems", tier: jurnal, lang: en, topics: [kehutanan, perkebunan]}
+  - {id: mdpi-forests, name: "Forests (MDPI)", url: "https://www.mdpi.com/journal/forests", feed: "https://www.mdpi.com/rss/journal/forests", tier: jurnal, lang: en, topics: [kehutanan]}
+  - {id: trees-forests-people, name: "Trees, Forests and People", url: "https://www.sciencedirect.com/journal/trees-forests-and-people", feed: "https://rss.sciencedirect.com/publication/science/2666-7193", tier: jurnal, lang: en, topics: [kehutanan]}
+  - {id: reviews-aquaculture, name: "Reviews in Aquaculture", url: "https://onlinelibrary.wiley.com/journal/17535131", feed: "https://onlinelibrary.wiley.com/feed/17535131/most-recent", tier: jurnal, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: aquaculture-research, name: "Aquaculture Research", url: "https://onlinelibrary.wiley.com/journal/1355557x", feed: "https://onlinelibrary.wiley.com/feed/1355557x/most-recent", tier: jurnal, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: aquaculture-intl, name: "Aquaculture International", url: "https://link.springer.com/journal/10499", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=10499&channel-name=Aquaculture%20International", tier: jurnal, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: aquacultural-engineering, name: "Aquacultural Engineering", url: "https://www.sciencedirect.com/journal/aquacultural-engineering", feed: "https://rss.sciencedirect.com/publication/science/0144-8609", tier: jurnal, lang: en, topics: [perikanan-tawar, perikanan-laut]}
+  - {id: j-applied-aquaculture, name: "Journal of Applied Aquaculture", url: "https://www.tandfonline.com/journals/wjaa20", feed: "https://www.tandfonline.com/feed/rss/wjaa20", tier: jurnal, lang: en, topics: [perikanan-tawar]}
+  - {id: mdpi-plants, name: "Plants (MDPI)", url: "https://www.mdpi.com/journal/plants", feed: "https://www.mdpi.com/rss/journal/plants", tier: jurnal, lang: en, topics: [botani]}
+  - {id: mdpi-diversity, name: "Diversity (MDPI)", url: "https://www.mdpi.com/journal/diversity", feed: "https://www.mdpi.com/rss/journal/diversity", tier: jurnal, lang: en, topics: [zoologi, botani]}
+  - {id: mdpi-microorganisms, name: "Microorganisms (MDPI)", url: "https://www.mdpi.com/journal/microorganisms", feed: "https://www.mdpi.com/rss/journal/microorganisms", tier: jurnal, lang: en, topics: [mikrobiologi]}
+  - {id: agrirxiv, name: "AgriRxiv", url: "https://www.agrirxiv.org/", tier: preprint, lang: en, topics: [pertanian]}
+  - {id: biorxiv-plant-biology, name: "bioRxiv Plant Biology", url: "https://www.biorxiv.org/collection/plant-biology", feed: "https://connect.biorxiv.org/biorxiv_xml.php?subject=plant_biology", tier: preprint, lang: en, topics: [botani]}
+  - {id: biorxiv-zoology, name: "bioRxiv Zoology", url: "https://www.biorxiv.org/collection/zoology", feed: "https://connect.biorxiv.org/biorxiv_xml.php?subject=zoology", tier: preprint, lang: en, topics: [zoologi]}
+  - {id: biorxiv-microbiology, name: "bioRxiv Microbiology", url: "https://www.biorxiv.org/collection/microbiology", feed: "https://connect.biorxiv.org/biorxiv_xml.php?subject=microbiology", tier: preprint, lang: en, topics: [mikrobiologi]}
+
+  # Kandidat yang belum aktif
+  - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.menlhk.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Verifikasi domain resmi setelah kementerian kehutanan dipisah dari KLHK."}
+  - {id: bps, name: "Badan Pusat Statistik", url: "https://www.bps.go.id/", tier: pemerintah, lang: id, topics: [pertanian], enabled: false, note: "Berupa rilis statistik berkala. Cocok sebagai modul data berkala."}
+  - {id: seafoodsource, name: "SeafoodSource (Akuakultur)", url: "https://www.seafoodsource.com/news/aquaculture", tier: media, lang: en, topics: [perikanan-laut], enabled: false, note: "Media dagang komersial dengan sebagian artikel berbayar. Perlu penilaian redaksi dan penyaring Asia."}
+  - {id: undercurrent, name: "Undercurrent News", url: "https://www.undercurrentnews.com/", tier: media, lang: en, topics: [perikanan-laut], enabled: false, note: "Langganan berbayar, judul terbatas."}
+  - {id: hatchery-intl, name: "Hatchery International", url: "https://www.hatcheryinternational.com/", tier: media, lang: en, topics: [perikanan-tawar], enabled: false, note: "Media dagang. Perlu penyaring Asia."}
+  - {id: agribusiness-global, name: "AgriBusiness Global", url: "https://www.agribusinessglobal.com/", tier: media, lang: en, topics: [pertanian], enabled: false, note: "Media dagang global. Perlu penyaring Asia."}
+  - {id: agrospectrum-asia, name: "AgroSpectrum Asia", url: "https://www.agrospectrumasia.com/", tier: media, lang: en, topics: [pertanian], enabled: false, note: "Media dagang agribisnis Asia. Kebijakan redaksi belum diperiksa."}
+  - {id: rice-news-today, name: "Rice News Today", url: "https://ricenewstoday.com/", tier: media, lang: en, topics: [pertanian], enabled: false, note: "Fokus pasar dan harga beras. Kebijakan redaksi belum diperiksa."}
+  - {id: forest-trends, name: "Forest Trends", url: "https://www.forest-trends.org/", tier: lembaga, lang: en, topics: [kehutanan], enabled: false, note: "Fokus pasar dan pembiayaan hutan global. Perlu penyaring Asia."}
+  - {id: katadata-green, name: "Katadata Green", url: "https://katadata.co.id/green", tier: media, lang: id, topics: [kehutanan], enabled: false, note: "Media lingkungan umum. Cakupan pertanian dan kehutanan perlu penyaring."}
