@@ -32,6 +32,10 @@ def render(cfg: Config, state: dict, out: Path = ROOT / "dist") -> None:
     by_topic = {t.slug: [boxes[s.id] for s in enabled if t.slug in s.topics] for t in cfg.topics}
     primary = {t.slug: [boxes[s.id] for s in enabled if s.topics[0] == t.slug] for t in cfg.topics}
 
+    def filled(boxes_: list[dict]) -> list[dict]:
+        """Sisakan kotak yang punya judul. Sumber yang gagal tampil di halaman status."""
+        return [b for b in boxes_ if b["items"]]
+
     env = Environment(
         loader=FileSystemLoader(ROOT / "templates"),
         autoescape=select_autoescape(["html"]),
@@ -52,7 +56,7 @@ def render(cfg: Config, state: dict, out: Path = ROOT / "dist") -> None:
         "",
         root="",
         current=None,
-        sections=[(t, primary[t.slug]) for t in cfg.topics if primary[t.slug]],
+        sections=[(t, filled(primary[t.slug])) for t in cfg.topics],
     )
     for t in cfg.topics:
         write(f"topik/{t.slug}/index.html", "topik.html", f"topik/{t.slug}/", root="../../", current=t.slug, topic=t, boxes=by_topic[t.slug])

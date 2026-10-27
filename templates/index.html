@@ -16,9 +16,13 @@
 {% for topic, boxes in sections %}
 <section class="topik">
 <h2 class="judul"><a href="{{ root }}topik/{{ topic.slug }}/">{{ topic.name }}</a></h2>
+{% if boxes %}
 <div class="grid">
 {% for b in boxes %}{{ box(b, tiers) }}{% endfor %}
 </div>
+{% else %}
+<p class="kosong">Belum ada judul dari sumber topik ini. Keadaan sumber tercatat di <a href="{{ root }}status/">halaman status</a>.</p>
+{% endif %}
 </section>
 {% endfor %}
 {% endblock %}

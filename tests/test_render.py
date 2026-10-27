@@ -28,6 +28,17 @@ def test_render_publishes_icons_and_og_image(tmp_path):
     assert 'href="../../static/favicon.ico"' in topik
 
 
+def test_homepage_lists_every_topic_and_drops_empty_boxes(tmp_path):
+    cfg = load()
+    render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
+    html = (tmp_path / "out" / "index.html").read_text(encoding="utf-8")
+    for topic in cfg.topics:
+        assert f'href="topik/{topic.slug}/"' in html, f"topik hilang dari beranda: {topic.slug}"
+    assert html.count('class="topik"') == len(cfg.topics)
+    assert "Belum ada judul yang termuat dari sumber ini" not in html
+    assert html.count("Belum ada judul dari sumber topik ini") == len(cfg.topics)
+
+
 def test_render_escapes_titles(tmp_path):
     cfg = load()
     first = next(s for s in cfg.sources if s.enabled)
