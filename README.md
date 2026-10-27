@@ -26,7 +26,7 @@ Tata letaknya mengikuti gaya Techurls: satu kotak per sumber, berisi enam judul 
 
 ```mermaid
 flowchart LR
-    CFG[config/sources.yaml] --> FET[Pengambil feed]
+    CFG[config/sources.yaml] --> FET[Pengambil feed dan halaman]
     CRON[GitHub Actions tiap 3 jam] --> FET
     FET --> NRM[Normalisasi dan deduplikasi]
     NRM --> ST[(data/state.json)]
@@ -36,7 +36,7 @@ flowchart LR
 ```
 
 1. `config/sources.yaml` mendaftar sumber, topik, bahasa, tingkat, dan penyaring kata kunci.
-2. Pengambil memuat semua *feed* secara paralel. Sumber dengan `feed: auto` dicari lewat tag `<link rel="alternate">` dan jalur umum seperti `/feed/` dan `/rss.xml`.
+2. Pengambil memuat semua *feed* secara paralel. Sumber dengan `feed: auto` dicari lewat tag `<link rel="alternate">` dan jalur umum seperti `/feed/` dan `/rss.xml`. Sumber tanpa RSS memakai aturan `list` untuk membaca daftar berita dari halaman biasa.
 3. Normalisasi membersihkan HTML dari judul, membuang parameter pelacak (`utm_*`, `fbclid`), menolak tautan selain http(s), lalu membuang duplikat berdasarkan URL dan judul.
 4. Generator menulis `index.html`, satu halaman per topik, `status/`, dan `data.json`.
 5. Hanya judul, tanggal, dan tautan keluar yang disimpan. Isi artikel tidak disalin.
@@ -49,6 +49,7 @@ warta-hayati/
 ├── src/wartahayati/
 │   ├── config.py              muat dan validasi konfigurasi
 │   ├── fetcher.py             ambil feed, temukan feed, simpan riwayat
+│   ├── listpage.py            baca daftar berita dari halaman tanpa RSS
 │   ├── normalize.py           pembersihan, penyaring, penggabungan
 │   ├── render.py              pembangun situs statis
 │   └── cli.py                 perintah build, fetch, render, check
@@ -103,6 +104,26 @@ Setiap sumber berupa satu entri di `config/sources.yaml`:
   # note: "alasan"                 # wajib diisi bila enabled: false
 ```
 
+Sumber tanpa RSS memakai aturan `list` untuk membaca daftar berita dari halaman biasa. Aturan ini tidak boleh dipakai bersama `feed`.
+
+```yaml
+- id: fao-asia-pasifik
+  name: "FAO Asia dan Pasifik"
+  url: "https://www.fao.org/asiapacific/news/"   # halaman daftar berita
+  tier: lembaga
+  lang: en
+  topics: [pertanian, perikanan-tawar, perikanan-laut, kehutanan]
+  list:
+    item: "div.d-list-news"          # wadah tiap berita
+    title: "h5.title-link a"         # elemen judul
+    date: "h6.date"                  # opsional: elemen tanggal
+    summary: "div.d-list-content p"  # opsional: elemen ringkasan
+    # link: "a"                      # opsional: bawaan tautan pertama di dalam item
+    # date_in_title: false           # opsional: tanggal dibaca dari judul lalu dibuang
+```
+
+Pemilihnya sederhana: tag, `.kelas`, `#id`, `:has(...)`, hubungan keturunan dengan spasi, dan gabungan dengan koma. Tanggal dikenali dalam bentuk `21-09-2026`, `23/10/2026`, `2026-10-27`, `25 Oktober 2026`, dan `27 Okt 2026` (nama hari dan bulan Indonesia maupun Inggris, `list` hanya memakai pustaka standar `html.parser`). Aturan divalidasi saat config dimuat: kunci tak dikenal, nilai kosong, atau `list` bersama `feed` ditolak dengan pesan yang menyebut id sumbernya.
+
 Topik pertama pada `topics` menentukan tempat sumber tampil di beranda. Halaman topik menampilkan semua sumber yang memuat topik tersebut. Sumber yang melayani beberapa topik dan memerlukan penyaring berbeda per topik didaftarkan sebagai beberapa entri dengan `url` sama. Pengambil hanya mengunduh satu kali per alamat.
 
 Setelah mengubah daftar, jalankan `wartahayati check` dan baca keluarannya. Pengujian `pytest` ikut memvalidasi struktur berkas, memastikan setiap topik punya sumber utama, dan memastikan setiap sumber nonaktif membawa `note`.
@@ -123,15 +144,16 @@ Sumber yang *feed*-nya gagal dimuat tidak dinonaktifkan. Kegagalannya tampil di 
 
 ## Sumber awal dan celah cakupan
 
-Daftar sumber memuat 43 sumber aktif dan 11 kandidat yang menunggu penilaian redaksi: 34 sumber awal dari dua daftar bacaan terlampir, ditambah 9 sumber pengganti hasil penelusuran 2026-10-27.
+Daftar sumber memuat 44 sumber aktif dan 10 kandidat yang menunggu penilaian redaksi: 34 sumber awal dari dua daftar bacaan terlampir, ditambah 9 sumber pengganti hasil penelusuran 2026-10-27 dan satu kementerian yang diaktifkan lewat pengambil halaman daftar berita.
 
 ### Keadaan *feed* (diuji 2026-10-27)
 
 Semua alamat *feed* eksplisit dan penemuan otomatis sudah diuji dengan `wartahayati check`. Hasil build CI terakhir sebelum penambahan sumber: **17 dari 34 sumber aktif gagal dimuat**, dan tidak satu pun karena kesalahan alamat yang bisa diperbaiki dari sisi proyek ini.
 
-Uji lokal setelah penambahan (2026-10-27) mencatat **20 gagal dari 43 sumber aktif**. Tiga di antaranya hanya menolak jaringan lokal (Reviews in Aquaculture, Journal of Applied Aquaculture, dan Experimental Agriculture), jadi tidak muncul di CI; sisanya sama dengan 17 kegagalan CI sebelumnya. Tidak satu pun dari sembilan sumber pengganti yang gagal.
+Uji lokal terakhir (2026-10-27) mencatat **17 gagal dari 44 sumber aktif**. Tiga di antaranya hanya menolak jaringan lokal (Reviews in Aquaculture, Journal of Applied Aquaculture, dan Experimental Agriculture), jadi di CI tersisa **14 kegagalan**. Tidak satu pun dari sembilan sumber pengganti yang gagal, dan tidak satu pun dari empat sumber yang dibaca dari halaman daftar berita.
 
-- **Tanpa RSS:** Kementan, KKP, BRIN (dua entri), JPHKA, FAO Asia-Pasifik, SEARCA, CIFOR-ICRAF, dan AgriRxiv. Halaman beritanya terbaca, tetapi tidak ada *feed* maupun petunjuk `rss`/`atom`. Menunggu pengambil halaman daftar berita.
+- **Tanpa RSS, dibaca dari halaman daftar:** Kementan (35 butir), FAO Asia-Pasifik (20), Kementerian Kehutanan (12), dan KKP (4). Halaman ini tidak menerbitkan *feed*, jadi dibaca memakai aturan `list`.
+- **Tanpa RSS, belum terselesaikan:** BRIN (dua entri), SEARCA, CIFOR-ICRAF, dan AgriRxiv. Halaman beritanya dibuat JavaScript sehingga judulnya tidak ada di HTML mentah, tidak ada endpoint JSON (`/wp-json`, `/jsonapi`), dan jalur `/feed/` maupun `/rss.xml` alternatif sudah dicoba tanpa hasil.
 - **Penerbit menghentikan RSS:** Trees, Forests and People dan Aquacultural Engineering (404 dari `rss.sciencedirect.com`), serta Agriculture and Food Security (alamat BMC menyajikan HTML, bukan XML).
 - **Menolak bot dengan 403:** Forests, Plants, Diversity, dan Microorganisms (MDPI). Ini blokir akses, bukan *feed* yang hilang.
 - **Aquaculture Research:** 404 pada kedua ISSN, cetak `1355557x` dan daring `13652109`. Tidak ada alamat pengganti yang ditemukan.
@@ -172,11 +194,11 @@ Kandidat yang diuji dan tidak dimasukkan:
 
 **Celah cakupan yang diketahui:**
 
-- Perkebunan kini dilayani Agroforestry Systems, Sugar Tech, dan Jurnal Agro Industri Perkebunan, ditambah Kementan dan CIFOR-ICRAF yang belum menyediakan RSS. Tanaman industri Indonesia (sawit, karet, kopi, kakao, tebu) masih tipis karena domain `ejurnal.litbang.pertanian.go.id` mati; yang perlu ditelusuri adalah pusat penelitian di bawah Kementan lewat alamat baru.
+- Perkebunan kini dilayani Agroforestry Systems, Sugar Tech, dan Jurnal Agro Industri Perkebunan, ditambah Kementan yang sudah dibaca dari halaman depannya dan CIFOR-ICRAF yang belum menyediakan RSS. Tanaman industri Indonesia (sawit, karet, kopi, kakao, tebu) masih tipis karena domain `ejurnal.litbang.pertanian.go.id` mati; yang perlu ditelusuri adalah pusat penelitian di bawah Kementan lewat alamat baru.
 - Botani, zoologi, dan mikrobiologi kini dilayani Botanical Studies, PhytoKeys, ZooKeys, Journal of Threatened Taxa, MycoKeys, dan Indonesian Journal of Biotechnology, di samping bioRxiv dan MDPI yang memblokir bot. Kebun raya dan museum zoologi di Asia belum ditemukan aliran yang layak.
 - Kehutanan bertambah iForest. JPHKA belum terselesaikan dan jurnal kehutanan Indonesia lain belum punya feed yang hidup.
-- Kementerian Kehutanan RI: domain resminya sudah terverifikasi pada 2026-10-27 di <https://www.kehutanan.go.id/> (pengganti `menlhk.go.id` setelah kementerian dipisah), tetapi situsnya belum menyediakan RSS, jadi masih berstatus kandidat sampai pengambil halaman daftar berita tersedia.
-- Sebagian besar situs kementerian tidak menyediakan RSS. Pengambil halaman daftar berita masih tahap rencana.
+- Kementerian Kehutanan RI: aktif sejak 2026-10-27 lewat halaman <https://www.kehutanan.go.id/news> (pengganti `menlhk.go.id` setelah kementerian dipisah). Situsnya tidak menyediakan RSS, jadi dibaca dengan aturan `list` dan menyumbang 12 butir per putaran.
+- Situs yang belum terselesaikan adalah BRIN, SEARCA, CIFOR-ICRAF, dan AgriRxiv, karena daftar beritanya dibuat JavaScript. Menyelesaikannya butuh peramban tanpa antarmuka (dependensi baru) atau endpoint JSON yang saat ini tidak tersedia.
 
 **Sumber dari daftar bacaan yang sengaja tidak dimasukkan sebagai aliran berita:**
 
@@ -219,7 +241,8 @@ Pengujian mencakup pembersihan teks, penyaringan tautan tidak aman, deduplikasi,
 
 - Halaman **Referensi** berisi tautan pencarian ilmiah dan alur kerja penelusuran: Google Scholar dengan operator `site:`, DOAJ untuk memeriksa status akses terbuka, AGRIS, dan CORE.
 - Pengambil OAI-PMH untuk repositori DSpace dan jurnal OJS Indonesia (Garuda, portal perguruan tinggi).
-- Pengambil halaman daftar berita untuk situs kementerian tanpa RSS, dengan pemantauan otomatis atas perubahan struktur halaman.
+- Pemantauan otomatis perubahan struktur halaman untuk sumber `list`: memberi peringatan di halaman status bila jumlah butir turun mendadak.
+- Peramban tanpa antarmuka opsional untuk situs berita ber-JavaScript (BRIN, SEARCA, CIFOR-ICRAF, AgriRxiv) — hanya bila dependensi tambahan disetujui.
 - Terjemahan judul otomatis dari Inggris ke Indonesia.
 - Penyaring Asia otomatis untuk sumber global.
 - Mode gelap dan *self-hosting* huruf untuk menghilangkan ketergantungan pada Google Fonts.
