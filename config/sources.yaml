@@ -141,6 +141,8 @@ sources:
     topics: [kehutanan]
     include: [asia, asian, indonesia, indonesian, borneo, kalimantan, sumatra, sumatera, java, jawa, sulawesi, papua, maluku, bali, malaysia, malaysian, philippin, thai, vietnam, myanmar, cambodia, laos, india, indian, china, chinese, japan, japanese, korea, taiwan, bangladesh, sri lanka, nepal, pakistan, singapore, brunei, timor, tropika, tropical]
 
+  - {id: sugar-tech, name: "Sugar Tech", url: "https://link.springer.com/journal/12355", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=12355&channel-name=Sugar%20Tech", tier: jurnal, lang: en, topics: [perkebunan]}
+
   # Kandidat yang belum aktif
   - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.menlhk.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Verifikasi domain resmi setelah kementerian kehutanan dipisah dari KLHK."}
   - {id: bps, name: "Badan Pusat Statistik", url: "https://www.bps.go.id/", tier: pemerintah, lang: id, topics: [pertanian], enabled: false, note: "Berupa rilis statistik berkala. Cocok sebagai modul data berkala."}
