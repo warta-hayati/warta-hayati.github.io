@@ -87,3 +87,11 @@ def test_fao_asia_pasifik_fixture_yields_news():
     assert all(b["link"].startswith("https://www.fao.org/") for b in hasil)
     assert all(b["published_parsed"] for b in hasil)
     assert all(len(b["title"]) > 20 for b in hasil)
+
+
+def test_kemenhut_fixture_yields_news():
+    sumber, hasil = _sumber_dari_fixture("kemenhut")
+    assert sumber.enabled, "Kementerian Kehutanan seharusnya sudah aktif"
+    assert len(hasil) >= 8
+    assert all(b["link"].startswith("https://www.kehutanan.go.id/news/") for b in hasil)
+    assert all(b["published_parsed"] for b in hasil)

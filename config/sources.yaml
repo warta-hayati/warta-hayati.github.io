@@ -48,6 +48,14 @@ sources:
     include: [mikroba, mikrobiologi, bakteri, jamur, fungi, tumbuhan, flora, fauna, satwa, herbarium, biodiversitas, keanekaragaman hayati, taksonomi]
   - {id: mongabay-id, name: "Mongabay Indonesia", url: "https://www.mongabay.co.id/", feed: "https://www.mongabay.co.id/feed/", tier: media, lang: id, topics: [kehutanan, zoologi]}
   - {id: jphka, name: "Jurnal Penelitian Hutan dan Konservasi Alam", url: "https://ejournal.forda-mof.org/ejournal-litbang/index.php/JPHKA", tier: jurnal, lang: id, topics: [kehutanan]}
+  - id: kemenhut
+    name: "Kementerian Kehutanan RI"
+    url: "https://www.kehutanan.go.id/news"
+    tier: pemerintah
+    lang: id
+    topics: [kehutanan]
+    list: {item: "div.group", title: "h3", date: "p.text-dark"}
+    note: "Tanpa RSS. Daftar berita dibaca dari halaman /news memakai aturan 'list'; domain resmi terverifikasi 2026-10-27."
 
   # Lembaga dan riset Asia-Pasifik
   - id: fao-asia-pasifik
@@ -152,7 +160,6 @@ sources:
   - {id: j-agro-industri-perkebunan, name: "Jurnal Agro Industri Perkebunan", url: "https://jurnal.polinela.ac.id/index.php/AIP", feed: "https://jurnal.polinela.ac.id/index.php/AIP/gateway/plugin/WebFeedGatewayPlugin/atom", tier: jurnal, lang: id, topics: [perkebunan]}
 
   # Kandidat yang belum aktif
-  - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.kehutanan.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Domain resmi sudah terverifikasi 2026-10-27 (judul halaman: Kementerian Kehutanan), tetapi situsnya belum menyediakan RSS. Menunggu pengambil halaman daftar berita."}
   - {id: bps, name: "Badan Pusat Statistik", url: "https://www.bps.go.id/", tier: pemerintah, lang: id, topics: [pertanian], enabled: false, note: "Berupa rilis statistik berkala. Cocok sebagai modul data berkala."}
   - {id: seafoodsource, name: "SeafoodSource (Akuakultur)", url: "https://www.seafoodsource.com/news/aquaculture", tier: media, lang: en, topics: [perikanan-laut], enabled: false, note: "Media dagang komersial dengan sebagian artikel berbayar. Perlu penilaian redaksi dan penyaring Asia."}
   - {id: undercurrent, name: "Undercurrent News", url: "https://www.undercurrentnews.com/", tier: media, lang: en, topics: [perikanan-laut], enabled: false, note: "Langganan berbayar, judul terbatas."}
