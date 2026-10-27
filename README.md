@@ -22,7 +22,7 @@ Tata letaknya mengikuti gaya Techurls: satu kotak per sumber, berisi enam judul 
 - Halaman `status/` yang menampilkan sumber gagal, alasan galat, dan daftar kandidat yang belum aktif.
 - Aksen warna per topik: garis judul, kepala kotak, tab, dan pita di tepi atas halaman memakai warna topik masing-masing (Pertanian hijau muda, Perkebunan hijau tua, Perikanan Tawar biru muda, Perikanan Payau/Laut biru tua, dan seterusnya), sehingga seksi mudah dikenali saat halaman digulir.
 - Tampilan ponsel: di layar sempit tab topik dibungkus ke beberapa baris sehingga tidak perlu digeser mendatar, target sentuh minimal 44px, dan tabel status berubah menjadi kartu. Di layar lebar tab tetap satu baris dan lengket saat halaman digulir.
-- Logo di kepala halaman, serta halaman `tentang/` berbahasa awam yang memuat cara pakai dan jalur kontak (surel pengelola dan situs pribadinya) untuk pembaca yang tidak memakai GitHub.
+- Logo di kepala halaman, serta halaman `tentang/` berbahasa awam yang memuat cara pakai dan jalur kontak (surel pengelola dan situs pribadinya) untuk pembaca yang tidak memakai GitHub. Jalur kontak hanya ada di halaman itu — tidak ditempel di footer halaman lain — supaya daftar judul tetap bersih.
 - Ekspor `data.json` untuk dipakai ulang oleh peneliti dan pengembang lain.
 - Situs statis tanpa basis data. Biaya hosting nol di GitHub Pages.
 

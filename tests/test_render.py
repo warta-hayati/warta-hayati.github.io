@@ -121,7 +121,7 @@ def test_stylesheet_has_mobile_rules(tmp_path):
     assert "scroll-snap-type:x proximity" in css, "tab mendatar untuk layar lebar hilang"
 
 
-def test_about_page_and_contact_reachable(tmp_path):
+def test_contact_lives_only_on_about_page(tmp_path):
     cfg = load()
     render(cfg, {"items": {}, "health": {}, "updated": None}, tmp_path / "out")
     out = tmp_path / "out"
@@ -132,6 +132,12 @@ def test_about_page_and_contact_reachable(tmp_path):
     assert 'href="../data.json"' in tentang
     assert 'src="../static/logo-warta-hayati-96.png"' in tentang, "logo kepala halaman hilang"
 
+    # Kontak sengaja hanya ada di halaman Tentang, tidak di halaman lain.
+    for rel in ("index.html", "status/index.html", f"topik/{cfg.topics[0].slug}/index.html"):
+        html = (out / rel).read_text(encoding="utf-8")
+        assert "mailto:" not in html, f"surel masih nongol di {rel}"
+        assert "ekajogja.com" not in html, f"situs pribadi masih nongol di {rel}"
+
     halaman = {
         "index.html": "tentang/",
         "status/index.html": "../tentang/",
@@ -140,6 +146,4 @@ def test_about_page_and_contact_reachable(tmp_path):
     }
     for rel, tautan in halaman.items():
         html = (out / rel).read_text(encoding="utf-8")
-        assert "mailto:ekajogja@gmail.com" in html, f"surel kontak hilang di {rel}"
-        assert "ekajogja.com" in html, f"alamat situs pribadi hilang di {rel}"
         assert f'href="{tautan}"' in html, f"tautan Tentang hilang di {rel}"
