@@ -130,6 +130,8 @@ sources:
     topics: [mikrobiologi]
     include: [asia, asian, indonesia, indonesian, borneo, kalimantan, sumatra, sumatera, java, jawa, sulawesi, papua, maluku, bali, malaysia, malaysian, philippin, thai, vietnam, myanmar, cambodia, laos, india, indian, china, chinese, japan, japanese, korea, taiwan, bangladesh, sri lanka, nepal, pakistan, singapore, brunei, timor, tropika, tropical]
 
+  - {id: indonesian-j-biotech, name: "Indonesian Journal of Biotechnology", url: "https://journal.ugm.ac.id/ijbiotech", feed: "https://journal.ugm.ac.id/ijbiotech/gateway/plugin/WebFeedGatewayPlugin/atom", tier: jurnal, lang: en, topics: [mikrobiologi]}
+
   # Kandidat yang belum aktif
   - {id: kemenhut, name: "Kementerian Kehutanan RI", url: "https://www.menlhk.go.id/", tier: pemerintah, lang: id, topics: [kehutanan], enabled: false, note: "Verifikasi domain resmi setelah kementerian kehutanan dipisah dari KLHK."}
   - {id: bps, name: "Badan Pusat Statistik", url: "https://www.bps.go.id/", tier: pemerintah, lang: id, topics: [pertanian], enabled: false, note: "Berupa rilis statistik berkala. Cocok sebagai modul data berkala."}
