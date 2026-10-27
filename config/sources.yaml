@@ -99,7 +99,6 @@ sources:
 
   - {id: botanical-studies, name: "Botanical Studies", url: "https://botanicalstudies.springeropen.com/", feed: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=40529&channel-name=Botanical%20Studies", tier: jurnal, lang: en, topics: [botani]}
 
-  - {id: biodiversitas, name: "Biodiversitas", url: "https://smujo.id/biodiv/", feed: "https://smujo.id/biodiv/gateway/plugin/WebFeedGatewayPlugin/atom", tier: jurnal, lang: en, topics: [botani, zoologi]}
 
   - id: phytokeys
     name: "PhytoKeys"
@@ -156,3 +155,4 @@ sources:
   - {id: rice-news-today, name: "Rice News Today", url: "https://ricenewstoday.com/", tier: media, lang: en, topics: [pertanian], enabled: false, note: "Fokus pasar dan harga beras. Kebijakan redaksi belum diperiksa."}
   - {id: forest-trends, name: "Forest Trends", url: "https://www.forest-trends.org/", tier: lembaga, lang: en, topics: [kehutanan], enabled: false, note: "Fokus pasar dan pembiayaan hutan global. Perlu penyaring Asia."}
   - {id: katadata-green, name: "Katadata Green", url: "https://katadata.co.id/green", tier: media, lang: id, topics: [kehutanan], enabled: false, note: "Media lingkungan umum. Cakupan pertanian dan kehutanan perlu penyaring."}
+  - {id: biodiversitas, name: "Biodiversitas", url: "https://smujo.id/biodiv/", feed: "https://smujo.id/biodiv/gateway/plugin/WebFeedGatewayPlugin/atom", tier: jurnal, lang: en, topics: [botani, zoologi], enabled: false, note: "Feed sempat terbaca (99 entri, terbaru 2026-10-22) tetapi berulang kali timeout pada 2026-10-27, dan jurnal tidak ditemukan di DOAJ. Menunggu penilaian redaksi."}
